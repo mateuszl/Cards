@@ -28,287 +28,279 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.list_box = new System.Windows.Forms.ListBox();
+            this.b_katalog = new System.Windows.Forms.Button();
+            this.b_generate = new System.Windows.Forms.Button();
+            this.b_load = new System.Windows.Forms.Button();
+            this.b_save = new System.Windows.Forms.Button();
+            this.l_width = new System.Windows.Forms.Label();
+            this.l_height = new System.Windows.Forms.Label();
+            this.l_space = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.tb_space = new System.Windows.Forms.TextBox();
+            this.pic_front = new System.Windows.Forms.PictureBox();
+            this.pic_back = new System.Windows.Forms.PictureBox();
+            this.ud_quantity = new System.Windows.Forms.NumericUpDown();
+            this.l_quantity = new System.Windows.Forms.Label();
+            this.l_revers = new System.Windows.Forms.Label();
+            this.b_default = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.b_add = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_front)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_back)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ud_quantity)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // list_box
             // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(59, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Folder";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.list_box.FormattingEnabled = true;
+            this.list_box.Location = new System.Drawing.Point(34, 132);
+            this.list_box.Name = "list_box";
+            this.list_box.Size = new System.Drawing.Size(242, 368);
+            this.list_box.TabIndex = 0;
+            this.list_box.SelectedIndexChanged += new System.EventHandler(this.list_box_SelectedIndexChanged);
             // 
-            // panel1
+            // b_katalog
             // 
-            this.panel1.Controls.Add(this.button4);
-            this.panel1.Controls.Add(this.button3);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.textBox3);
-            this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.textBox2);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(958, 56);
-            this.panel1.TabIndex = 1;
+            this.b_katalog.Location = new System.Drawing.Point(34, 32);
+            this.b_katalog.Name = "b_katalog";
+            this.b_katalog.Size = new System.Drawing.Size(75, 23);
+            this.b_katalog.TabIndex = 1;
+            this.b_katalog.Text = "Katalog";
+            this.b_katalog.UseVisualStyleBackColor = true;
+            this.b_katalog.Click += new System.EventHandler(this.b_katalog_Click);
             // 
-            // label1
+            // b_generate
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(372, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Długość: ";
+            this.b_generate.Location = new System.Drawing.Point(827, 520);
+            this.b_generate.Name = "b_generate";
+            this.b_generate.Size = new System.Drawing.Size(75, 23);
+            this.b_generate.TabIndex = 2;
+            this.b_generate.Text = "Generuj pdf";
+            this.b_generate.UseVisualStyleBackColor = true;
+            this.b_generate.Click += new System.EventHandler(this.b_generate_Click_1);
+            // 
+            // b_load
+            // 
+            this.b_load.Location = new System.Drawing.Point(141, 29);
+            this.b_load.Name = "b_load";
+            this.b_load.Size = new System.Drawing.Size(75, 23);
+            this.b_load.TabIndex = 3;
+            this.b_load.Text = "Wczytaj";
+            this.b_load.UseVisualStyleBackColor = true;
+            this.b_load.Click += new System.EventHandler(this.b_load_Click);
+            // 
+            // b_save
+            // 
+            this.b_save.Location = new System.Drawing.Point(141, 59);
+            this.b_save.Name = "b_save";
+            this.b_save.Size = new System.Drawing.Size(75, 23);
+            this.b_save.TabIndex = 4;
+            this.b_save.Text = "Zapisz";
+            this.b_save.UseVisualStyleBackColor = true;
+            this.b_save.Click += new System.EventHandler(this.b_save_Click);
+            // 
+            // l_width
+            // 
+            this.l_width.AutoSize = true;
+            this.l_width.Location = new System.Drawing.Point(254, 33);
+            this.l_width.Name = "l_width";
+            this.l_width.Size = new System.Drawing.Size(57, 13);
+            this.l_width.TabIndex = 5;
+            this.l_width.Text = "Szerokość";
+            // 
+            // l_height
+            // 
+            this.l_height.AutoSize = true;
+            this.l_height.Location = new System.Drawing.Point(254, 65);
+            this.l_height.Name = "l_height";
+            this.l_height.Size = new System.Drawing.Size(57, 13);
+            this.l_height.TabIndex = 6;
+            this.l_height.Text = "Wysokość";
+            // 
+            // l_space
+            // 
+            this.l_space.AutoSize = true;
+            this.l_space.Location = new System.Drawing.Point(394, 32);
+            this.l_space.Name = "l_space";
+            this.l_space.Size = new System.Drawing.Size(41, 13);
+            this.l_space.TabIndex = 7;
+            this.l_space.Text = "Odstęp";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(432, 15);
+            this.textBox1.Location = new System.Drawing.Point(317, 29);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(38, 20);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "89";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(476, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(23, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "mm";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(640, 18);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(23, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "mm";
+            this.textBox1.Size = new System.Drawing.Size(51, 20);
+            this.textBox1.TabIndex = 9;
+            this.textBox1.Text = "63";
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(596, 15);
+            this.textBox2.Location = new System.Drawing.Point(317, 62);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(38, 20);
-            this.textBox2.TabIndex = 5;
-            this.textBox2.Text = "63";
+            this.textBox2.Size = new System.Drawing.Size(51, 20);
+            this.textBox2.TabIndex = 10;
+            this.textBox2.Text = "89";
             // 
-            // label4
+            // tb_space
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(527, 18);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Szerokość: ";
+            this.tb_space.Location = new System.Drawing.Point(441, 29);
+            this.tb_space.Name = "tb_space";
+            this.tb_space.Size = new System.Drawing.Size(57, 20);
+            this.tb_space.TabIndex = 11;
+            this.tb_space.Text = "10";
             // 
-            // label5
+            // pic_front
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(794, 18);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(23, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "mm";
+            this.pic_front.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pic_front.Location = new System.Drawing.Point(317, 133);
+            this.pic_front.Name = "pic_front";
+            this.pic_front.Size = new System.Drawing.Size(252, 356);
+            this.pic_front.TabIndex = 12;
+            this.pic_front.TabStop = false;
             // 
-            // textBox3
+            // pic_back
             // 
-            this.textBox3.Location = new System.Drawing.Point(749, 15);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(38, 20);
-            this.textBox3.TabIndex = 8;
+            this.pic_back.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pic_back.Location = new System.Drawing.Point(601, 132);
+            this.pic_back.Name = "pic_back";
+            this.pic_back.Size = new System.Drawing.Size(252, 356);
+            this.pic_back.TabIndex = 13;
+            this.pic_back.TabStop = false;
             // 
-            // label6
+            // ud_quantity
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(690, 18);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 13);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "Margines:";
+            this.ud_quantity.Location = new System.Drawing.Point(718, 26);
+            this.ud_quantity.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.ud_quantity.Name = "ud_quantity";
+            this.ud_quantity.Size = new System.Drawing.Size(60, 20);
+            this.ud_quantity.TabIndex = 15;
+            this.ud_quantity.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
-            // panel2
+            // l_quantity
             // 
-            this.panel2.Controls.Add(this.listBox1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel2.Location = new System.Drawing.Point(0, 56);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(396, 443);
-            this.panel2.TabIndex = 2;
+            this.l_quantity.AutoSize = true;
+            this.l_quantity.Location = new System.Drawing.Point(680, 29);
+            this.l_quantity.Name = "l_quantity";
+            this.l_quantity.Size = new System.Drawing.Size(32, 13);
+            this.l_quantity.TabIndex = 16;
+            this.l_quantity.Text = "Ilość:";
+            // 
+            // l_revers
+            // 
+            this.l_revers.AutoSize = true;
+            this.l_revers.Location = new System.Drawing.Point(524, 29);
+            this.l_revers.Name = "l_revers";
+            this.l_revers.Size = new System.Drawing.Size(46, 13);
+            this.l_revers.TabIndex = 17;
+            this.l_revers.Text = "Rewers:";
+            // 
+            // b_default
+            // 
+            this.b_default.Location = new System.Drawing.Point(576, 24);
+            this.b_default.Name = "b_default";
+            this.b_default.Size = new System.Drawing.Size(75, 23);
+            this.b_default.TabIndex = 18;
+            this.b_default.Text = "Domyślny";
+            this.b_default.UseVisualStyleBackColor = true;
+            this.b_default.Click += new System.EventHandler(this.b_default_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(576, 55);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 19;
+            this.button2.Text = "Wybierz inny";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // b_add
+            // 
+            this.b_add.Location = new System.Drawing.Point(842, 29);
+            this.b_add.Name = "b_add";
+            this.b_add.Size = new System.Drawing.Size(75, 23);
+            this.b_add.TabIndex = 20;
+            this.b_add.Text = "Dodaj";
+            this.b_add.UseVisualStyleBackColor = true;
+            this.b_add.Click += new System.EventHandler(this.b_add_Click);
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(12, 6);
+            this.listBox1.Location = new System.Drawing.Point(877, 133);
             this.listBox1.Name = "listBox1";
-            this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(368, 420);
-            this.listBox1.TabIndex = 0;
-            this.listBox1.Click += new System.EventHandler(this.listBox1_Click);
-            this.listBox1.CursorChanged += new System.EventHandler(this.listBox1_CursorChanged);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(402, 63);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(264, 355);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Location = new System.Drawing.Point(681, 63);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(264, 355);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 4;
-            this.pictureBox2.TabStop = false;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(77, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(59, 23);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "Generuj";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(142, 12);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(59, 23);
-            this.button3.TabIndex = 11;
-            this.button3.Text = "Wczytaj";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(211, 13);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(59, 23);
-            this.button4.TabIndex = 12;
-            this.button4.Text = "Zapisz";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(402, 435);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(402, 21);
-            this.comboBox1.TabIndex = 5;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            this.comboBox1.Click += new System.EventHandler(this.comboBox1_Click);
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(810, 464);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(135, 23);
-            this.button5.TabIndex = 6;
-            this.button5.Text = "Zastsouj do wszystkich";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(810, 435);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(135, 23);
-            this.button6.TabIndex = 7;
-            this.button6.Text = "Zastsouj tylko do tej karty";
-            this.button6.UseVisualStyleBackColor = true;
+            this.listBox1.Size = new System.Drawing.Size(259, 368);
+            this.listBox1.TabIndex = 21;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(958, 499);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(1203, 666);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.b_add);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.b_default);
+            this.Controls.Add(this.l_revers);
+            this.Controls.Add(this.l_quantity);
+            this.Controls.Add(this.ud_quantity);
+            this.Controls.Add(this.pic_back);
+            this.Controls.Add(this.pic_front);
+            this.Controls.Add(this.tb_space);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.l_space);
+            this.Controls.Add(this.l_height);
+            this.Controls.Add(this.l_width);
+            this.Controls.Add(this.b_save);
+            this.Controls.Add(this.b_load);
+            this.Controls.Add(this.b_generate);
+            this.Controls.Add(this.b_katalog);
+            this.Controls.Add(this.list_box);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_front)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_back)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ud_quantity)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ListBox list_box;
+        private System.Windows.Forms.Button b_katalog;
+        private System.Windows.Forms.Button b_generate;
+        private System.Windows.Forms.Button b_load;
+        private System.Windows.Forms.Button b_save;
+        private System.Windows.Forms.Label l_width;
+        private System.Windows.Forms.Label l_height;
+        private System.Windows.Forms.Label l_space;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tb_space;
+        private System.Windows.Forms.PictureBox pic_front;
+        private System.Windows.Forms.PictureBox pic_back;
+        private System.Windows.Forms.NumericUpDown ud_quantity;
+        private System.Windows.Forms.Label l_quantity;
+        private System.Windows.Forms.Label l_revers;
+        private System.Windows.Forms.Button b_default;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button b_add;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 
