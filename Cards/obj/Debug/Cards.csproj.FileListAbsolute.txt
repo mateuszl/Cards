@@ -9,3 +9,14 @@ C:\Users\mateuszl\documents\visual studio 2013\Projects\Cards\Cards\obj\Debug\Ca
 C:\Users\mateuszl\documents\visual studio 2013\Projects\Cards\Cards\obj\Debug\Cards.csproj.GenerateResource.Cache
 C:\Users\mateuszl\documents\visual studio 2013\Projects\Cards\Cards\obj\Debug\Cards.exe
 C:\Users\mateuszl\documents\visual studio 2013\Projects\Cards\Cards\obj\Debug\Cards.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\Cards\Cards\bin\Debug\Cards.exe.config
+C:\Users\user\Documents\Visual Studio 2013\Projects\Cards\Cards\obj\Debug\Cards.exe
+C:\Users\user\Documents\Visual Studio 2013\Projects\Cards\Cards\obj\Debug\Cards.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\Cards\Cards\bin\Debug\Cards.exe
+C:\Users\user\Documents\Visual Studio 2013\Projects\Cards\Cards\bin\Debug\Cards.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\Cards\Cards\bin\Debug\itextsharp.dll
+C:\Users\user\Documents\Visual Studio 2013\Projects\Cards\Cards\bin\Debug\itextsharp.xml
+C:\Users\user\Documents\Visual Studio 2013\Projects\Cards\Cards\obj\Debug\Cards.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2013\Projects\Cards\Cards\obj\Debug\Cards.Form1.resources
+C:\Users\user\Documents\Visual Studio 2013\Projects\Cards\Cards\obj\Debug\Cards.Properties.Resources.resources
+C:\Users\user\Documents\Visual Studio 2013\Projects\Cards\Cards\obj\Debug\Cards.csproj.GenerateResource.Cache

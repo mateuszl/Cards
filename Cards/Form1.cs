@@ -25,8 +25,9 @@ namespace Cards
     public partial class Form1 : Form
     {
         List<Card> cards;
-
-        string defaultReversePath = @"C:\TEMP\back\back_default.jpg";
+        string frontsDefaultPath = @"D:\temp\fronts";
+        string reversesPath = @"D:\temp\back";
+        string defaultReversePath = @"D:\temp\back\back_default.png";
 
         public Form1()
         {
@@ -62,7 +63,7 @@ namespace Cards
             try
             {
                 FolderBrowserDialog fbd = new FolderBrowserDialog();
-                fbd.SelectedPath = @"C:\TEMP\fronts";
+                fbd.SelectedPath = frontsDefaultPath;
                 DialogResult result = fbd.ShowDialog();
                 string path = fbd.SelectedPath;
                 string[] files = System.IO.Directory.GetFiles(path);
@@ -71,12 +72,13 @@ namespace Cards
                 foreach (string file in files)
                 {
                     list_box.Items.Add(file);
+                    list_box.DisplayMember.TrimStart(path.ToCharArray());
                     //comboBox1.Items.Add(file);
 
                     Card k;
                     k = new Card();
                     k.frontPath = file;
-                    k.name = file;
+                    k.name = file.TrimStart(path.ToCharArray());
                     k.quantity = 1; // ud_quantity.Value;
                     cards.Add(k);
                 }
@@ -124,7 +126,7 @@ namespace Cards
             //dodac jakieś wyrzucenie tego co juz jest ustawione jako obrazek
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "All files (*.*)|*.*|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
-            dialog.InitialDirectory = (@"C:\TEMP\back");
+            dialog.InitialDirectory = reversesPath;
             dialog.Title = "Please select an image file for reverse.";
             DialogResult result = dialog.ShowDialog();
             string file = dialog.ToString();
