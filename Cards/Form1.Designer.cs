@@ -36,8 +36,8 @@
             this.l_width = new System.Windows.Forms.Label();
             this.l_height = new System.Windows.Forms.Label();
             this.l_space = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tb_width = new System.Windows.Forms.TextBox();
+            this.tb_height = new System.Windows.Forms.TextBox();
             this.tb_space = new System.Windows.Forms.TextBox();
             this.pic_front = new System.Windows.Forms.PictureBox();
             this.pic_back = new System.Windows.Forms.PictureBox();
@@ -45,9 +45,10 @@
             this.l_quantity = new System.Windows.Forms.Label();
             this.l_revers = new System.Windows.Forms.Label();
             this.b_default = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.b_customBack = new System.Windows.Forms.Button();
             this.b_add = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.list_box_c = new System.Windows.Forms.ListBox();
+            this.b_delete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pic_front)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_back)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ud_quantity)).BeginInit();
@@ -129,21 +130,21 @@
             this.l_space.TabIndex = 7;
             this.l_space.Text = "Odstęp";
             // 
-            // textBox1
+            // tb_width
             // 
-            this.textBox1.Location = new System.Drawing.Point(317, 29);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(51, 20);
-            this.textBox1.TabIndex = 9;
-            this.textBox1.Text = "63";
+            this.tb_width.Location = new System.Drawing.Point(317, 29);
+            this.tb_width.Name = "tb_width";
+            this.tb_width.Size = new System.Drawing.Size(51, 20);
+            this.tb_width.TabIndex = 9;
+            this.tb_width.Text = "63";
             // 
-            // textBox2
+            // tb_height
             // 
-            this.textBox2.Location = new System.Drawing.Point(317, 62);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(51, 20);
-            this.textBox2.TabIndex = 10;
-            this.textBox2.Text = "89";
+            this.tb_height.Location = new System.Drawing.Point(317, 62);
+            this.tb_height.Name = "tb_height";
+            this.tb_height.Size = new System.Drawing.Size(51, 20);
+            this.tb_height.TabIndex = 10;
+            this.tb_height.Text = "89";
             // 
             // tb_space
             // 
@@ -216,19 +217,19 @@
             this.b_default.UseVisualStyleBackColor = true;
             this.b_default.Click += new System.EventHandler(this.b_default_Click);
             // 
-            // button2
+            // b_customBack
             // 
-            this.button2.Location = new System.Drawing.Point(576, 55);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 19;
-            this.button2.Text = "Wybierz inny";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.b_customBack.Location = new System.Drawing.Point(576, 55);
+            this.b_customBack.Name = "b_customBack";
+            this.b_customBack.Size = new System.Drawing.Size(75, 23);
+            this.b_customBack.TabIndex = 19;
+            this.b_customBack.Text = "Wybierz inny";
+            this.b_customBack.UseVisualStyleBackColor = true;
+            this.b_customBack.Click += new System.EventHandler(this.b_customBack_Click);
             // 
             // b_add
             // 
-            this.b_add.Location = new System.Drawing.Point(842, 29);
+            this.b_add.Location = new System.Drawing.Point(900, 27);
             this.b_add.Name = "b_add";
             this.b_add.Size = new System.Drawing.Size(75, 23);
             this.b_add.TabIndex = 20;
@@ -236,22 +237,33 @@
             this.b_add.UseVisualStyleBackColor = true;
             this.b_add.Click += new System.EventHandler(this.b_add_Click);
             // 
-            // listBox1
+            // list_box_c
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(877, 133);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(259, 368);
-            this.listBox1.TabIndex = 21;
+            this.list_box_c.FormattingEnabled = true;
+            this.list_box_c.Location = new System.Drawing.Point(877, 133);
+            this.list_box_c.Name = "list_box_c";
+            this.list_box_c.Size = new System.Drawing.Size(259, 368);
+            this.list_box_c.TabIndex = 21;
+            // 
+            // b_delete
+            // 
+            this.b_delete.Location = new System.Drawing.Point(981, 27);
+            this.b_delete.Name = "b_delete";
+            this.b_delete.Size = new System.Drawing.Size(75, 23);
+            this.b_delete.TabIndex = 22;
+            this.b_delete.Text = "Usuń";
+            this.b_delete.UseVisualStyleBackColor = true;
+            this.b_delete.Click += new System.EventHandler(this.b_delete_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1203, 666);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.b_delete);
+            this.Controls.Add(this.list_box_c);
             this.Controls.Add(this.b_add);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.b_customBack);
             this.Controls.Add(this.b_default);
             this.Controls.Add(this.l_revers);
             this.Controls.Add(this.l_quantity);
@@ -259,8 +271,8 @@
             this.Controls.Add(this.pic_back);
             this.Controls.Add(this.pic_front);
             this.Controls.Add(this.tb_space);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tb_height);
+            this.Controls.Add(this.tb_width);
             this.Controls.Add(this.l_space);
             this.Controls.Add(this.l_height);
             this.Controls.Add(this.l_width);
@@ -289,8 +301,8 @@
         private System.Windows.Forms.Label l_width;
         private System.Windows.Forms.Label l_height;
         private System.Windows.Forms.Label l_space;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tb_width;
+        private System.Windows.Forms.TextBox tb_height;
         private System.Windows.Forms.TextBox tb_space;
         private System.Windows.Forms.PictureBox pic_front;
         private System.Windows.Forms.PictureBox pic_back;
@@ -298,9 +310,10 @@
         private System.Windows.Forms.Label l_quantity;
         private System.Windows.Forms.Label l_revers;
         private System.Windows.Forms.Button b_default;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button b_customBack;
         private System.Windows.Forms.Button b_add;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox list_box_c;
+        private System.Windows.Forms.Button b_delete;
     }
 }
 

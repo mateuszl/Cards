@@ -20,14 +20,26 @@ namespace Cards
         public float width;
         public float height;
         public decimal quantity;
+
+        public override string ToString()
+        {
+            return name.Substring(name.LastIndexOf("\\") + 1) + "   x " + quantity;
+        }
     }
 
     public partial class Form1 : Form
     {
         List<Card> cards;
-        string frontsDefaultPath = @"D:\temp\fronts";
-        string reversesPath = @"D:\temp\back";
-        string defaultReversePath = @"D:\temp\back\back_default.png";
+
+        //komp w pracy
+        string frontsDefaultPath = @"C:\temp\fronts";
+        string reversesPath = @"C:\temp\back";
+        string defaultReversePath = @"C:\temp\back\back_default.png";
+
+        // komp w domu
+        //string frontsDefaultPath = @"D:\temp\fronts";
+        //string reversesPath = @"D:\temp\back";
+        //string defaultReversePath = @"D:\temp\back\back_default.png";
 
         public Form1()
         {
@@ -51,14 +63,13 @@ namespace Cards
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something wrong");
+                MessageBox.Show("Coś się nie udało");
             }
         }
 
         private void b_katalog_Click(object sender, EventArgs e)
         {
             list_box.Items.Clear();
-            //ud_quantity.
 
             try
             {
@@ -66,26 +77,14 @@ namespace Cards
                 fbd.SelectedPath = frontsDefaultPath;
                 DialogResult result = fbd.ShowDialog();
                 string path = fbd.SelectedPath;
-                string[] files = System.IO.Directory.GetFiles(path);
+                string[] files = System.IO.Directory.GetFiles(path, "*.jpg");
                 System.Windows.Forms.MessageBox.Show("Załadowano plików: " + files.Length.ToString(), "Message");
-                //            list_box.Items.AddRange(files);
-                foreach (string file in files)
-                {
-                    list_box.Items.Add(file);
-                    list_box.DisplayMember.TrimStart(path.ToCharArray());
-                    //comboBox1.Items.Add(file);
-
-                    Card k;
-                    k = new Card();
-                    k.frontPath = file;
-                    k.name = file.TrimStart(path.ToCharArray());
-                    k.quantity = 1; // ud_quantity.Value;
-                    cards.Add(k);
-                }
+                list_box.Items.AddRange(files);
+                list_box.DisplayMember.TrimStart(path.ToCharArray());
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Something wrong");
+                MessageBox.Show("Coś sie nie udało");
             }
         }
 
@@ -106,7 +105,18 @@ namespace Cards
 
         private void b_add_Click(object sender, EventArgs e)
         {
-            //dodaje karte do listy kreowania pdf
+            //dodaje obiekt do listy gotowych kart - musi wziac front, back, rozmiar, ilosc
+            Card c;
+            c = new Card();
+            c.frontPath = list_box.SelectedItem.ToString();
+            c.reversePath = pic_back.ImageLocation;
+            c.name = list_box.SelectedItem.ToString().TrimStart(frontsDefaultPath.ToCharArray());
+            c.quantity = ud_quantity.Value;
+            c.width = float.Parse(tb_width.Text, System.Globalization.CultureInfo.InvariantCulture);
+            c.height = float.Parse(tb_height.Text, System.Globalization.CultureInfo.InvariantCulture);
+            cards.Add(c);
+            //wyswietlenie istniejacych obiektow na drugiej liscie
+            list_box_c.Items.Add(c);
         }
 
         private void b_default_Click(object sender, EventArgs e)
@@ -121,18 +131,34 @@ namespace Cards
             return mm / .353F;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void b_customBack_Click(object sender, EventArgs e)
         {
             //dodac jakieś wyrzucenie tego co juz jest ustawione jako obrazek
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "All files (*.*)|*.*|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
-            dialog.InitialDirectory = reversesPath;
-            dialog.Title = "Please select an image file for reverse.";
-            DialogResult result = dialog.ShowDialog();
-            string file = dialog.ToString();
-            pic_back.ImageLocation = file;
-            pic_back.SizeMode = PictureBoxSizeMode.StretchImage;
+            try
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "All files (*.*)|*.*|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+                dialog.InitialDirectory = reversesPath;
+                dialog.Title = "Wybierz rewers dla karty";
+                DialogResult result = dialog.ShowDialog();
+                string file = dialog.ToString();
+                pic_back.ImageLocation = file;
+                pic_back.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Coś sie nie udało");
+            }
         }
 
+        private void b_delete_Click(object sender, EventArgs e)
+        {
+            if (list_box_c.SelectedIndex != -1)
+            {
+                object item = list_box_c.SelectedItem;
+                cards.RemoveAt(list_box_c.SelectedIndex);
+                list_box_c.Items.Remove(item);
+            }
+        }
     }
 }
