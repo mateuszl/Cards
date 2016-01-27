@@ -32,14 +32,14 @@ namespace Cards
         List<Card> cards;
 
         //komp w pracy
-        string frontsDefaultPath = @"C:\temp\fronts";
-        string reversesPath = @"C:\temp\back";
-        string defaultReversePath = @"C:\temp\back\back_default.png";
+        //string frontsDefaultPath = @"C:\temp\fronts";
+        //string reversesPath = @"C:\temp\back";
+        //string defaultReversePath = @"C:\temp\back\back_default.png";
 
         // komp w domu
-        //string frontsDefaultPath = @"D:\temp\fronts";
-        //string reversesPath = @"D:\temp\back";
-        //string defaultReversePath = @"D:\temp\back\back_default.png";
+        string frontsDefaultPath = @"D:\temp\fronts";
+        string reversesPath = @"D:\temp\back";
+        string defaultReversePath = @"D:\temp\back\back_default.png";
 
         public Form1()
         {
@@ -54,8 +54,6 @@ namespace Cards
 
         private void list_box_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //FileInfo fi = (FileInfo)list_box.SelectedItem;
-            //pic_front.ImageLocation = fi.FullName;
             try
             {
                 pic_front.ImageLocation = list_box.SelectedItem.ToString();
@@ -98,14 +96,14 @@ namespace Cards
             //zapisuje status do xml
         }
 
-        private void b_generate_Click_1(object sender, EventArgs e)
+        private void b_generate_Click(object sender, EventArgs e)
         {
             //generuje pdf
         }
 
         private void b_add_Click(object sender, EventArgs e)
         {
-            //dodaje obiekt do listy gotowych kart - musi wziac front, back, rozmiar, ilosc
+            //dodaje obiekt noewj karty do listy gotowych kart 
             Card c;
             c = new Card();
             c.frontPath = list_box.SelectedItem.ToString();
@@ -115,8 +113,7 @@ namespace Cards
             c.width = float.Parse(tb_width.Text, System.Globalization.CultureInfo.InvariantCulture);
             c.height = float.Parse(tb_height.Text, System.Globalization.CultureInfo.InvariantCulture);
             cards.Add(c);
-            //wyswietlenie istniejacych obiektow na drugiej liscie
-            list_box_c.Items.Add(c);
+            list_box_c.Items.Add(c); //wyswietlenie tworzonych obiektow na drugiej liscie
         }
 
         private void b_default_Click(object sender, EventArgs e)
