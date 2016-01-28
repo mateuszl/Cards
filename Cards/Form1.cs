@@ -11,6 +11,18 @@ using System.Windows.Forms;
 using iTextSharp;
 
 namespace Cards
+/* TODO
+ * dodac --- image.RotationDegrees = 90;
+ * dodac obsluge przerw /space
+ * 
+ * czemu nie dzialaja marginesy?
+ * czemu nie dziala sugestia rozszerzenia?
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
 {
     struct Card
     {
@@ -32,14 +44,14 @@ namespace Cards
         List<Card> cards;
 
         //komp w pracy
-        string frontsDefaultPath = @"C:\temp\fronts";
-        string reversesPath = @"C:\temp\back";
-        string defaultReversePath = @"C:\temp\back\back_default.png";
+        //string frontsDefaultPath = @"C:\temp\fronts";
+        //string reversesPath = @"C:\temp\back";
+        //string defaultReversePath = @"C:\temp\back\back_default.png";
 
         // komp w domu
-        //string frontsDefaultPath = @"D:\temp\fronts";
-        //string reversesPath = @"D:\temp\back";
-        //string defaultReversePath = @"D:\temp\back\back_default.png";
+        string frontsDefaultPath = @"D:\temp\fronts";
+        string reversesPath = @"D:\temp\back";
+        string defaultReversePath = @"D:\temp\back\back_default.png";
 
         public Form1()
         {
@@ -100,6 +112,8 @@ namespace Cards
             //generuje pdf
             float cardHeight = 0;
             float cardWidth = 0;
+            float space = float.Parse(tb_space.Text);
+
             try
             {
                 cardHeight = mm2point((float.Parse(tb_height.Text)));
@@ -107,7 +121,7 @@ namespace Cards
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Złe wymiary karty");
+                MessageBox.Show("Złe wymiary karty!");
             }
 
             for (int i = 0; i < cards.Count; i++)
@@ -117,74 +131,83 @@ namespace Cards
                 k.width = cardWidth;
                 cards[i] = k;
             }
-
-            saveFileDialog1.ShowDialog();
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.DefaultExt = ".pdf";
+            sfd.AddExtension = true;
+            sfd.ShowDialog();
 
             iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4);
-            iTextSharp.text.pdf.PdfWriter writer = iTextSharp.text.pdf.PdfWriter.GetInstance(doc, new System.IO.FileStream(saveFileDialog1.FileName, System.IO.FileMode.OpenOrCreate));
+            doc.SetMargins(20, 20, 10, 10);
 
-            doc.Open();
-            iTextSharp.text.pdf.PdfContentByte cb = writer.DirectContent;
-            doc.NewPage();
-            int cardsInX = Convert.ToInt16(mm2point(210) / cardWidth);
-            int cardsInY = Convert.ToInt16(mm2point(297) / cardHeight);
-
-            float reverse_margin = mm2point(210) - cardsInX * cardWidth - doc.LeftMargin;
-
-            int x = 0;
-            int y = 0;
-
-            List<Card> temp = new List<Card>();
-
-            for (int i = 0; i < cards.Count; i++)
+            try
             {
-                var img = iTextSharp.text.Image.GetInstance(cards[i].frontPath);
-                img.SetAbsolutePosition(doc.LeftMargin + x * cards[i].width, y * cards[i].height);
-                img.ScaleAbsolute(cardWidth, cardHeight);
-                cb.AddImage(img);
-                temp.Add(cards[i]);
-                x++;
+                iTextSharp.text.pdf.PdfWriter writer = iTextSharp.text.pdf.PdfWriter.GetInstance(doc, new System.IO.FileStream(sfd.FileName, System.IO.FileMode.OpenOrCreate));
+                doc.Open();
+                iTextSharp.text.pdf.PdfContentByte cb = writer.DirectContent;
 
-                /*
-                if (temp.Count < cardsInX*cardsInY) //źle, ale musi byc jakis warunek że jak strona nie jest pelna to i tak dodaje tyly
+
+                int cardsInX = Convert.ToInt16((mm2point(210) + space) / (cardWidth + space));
+                int cardsInY = Convert.ToInt16((mm2point(297) + space) / (cardHeight + space));
+                float reverse_margin = mm2point(210) + space - cardsInX * (cardWidth + space) - doc.LeftMargin;
+                int x = 0;
+                int y = 0;
+                int a = (cards.Count - (cards.Count % (cardsInX * cardsInY))); 
+
+                List<Card> temp = new List<Card>();
+
+                doc.NewPage();
+                for (int i = 0; i < cards.Count; i++)
                 {
-                    doc.NewPage();
-                    y = 0;
+                    var img = iTextSharp.text.Image.GetInstance(cards[i].frontPath);
+                    img.SetAbsolutePosition(doc.LeftMargin + x * cards[i].width, y * cards[i].height); //dodac spaces
+                    img.ScaleAbsolute(cardWidth, cardHeight);
+                    cb.AddImage(img);
+                    temp.Add(cards[i]);
+                    x++;
 
-                    for (int z = 0; z < temp.Count; z++)
+                    if (x >= cardsInX)
                     {
-                        var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
-                        reverse.SetAbsolutePosition(reverse_margin + x * temp[z].width, y * temp[z].height);
-                        reverse.ScaleAbsolute(cardWidth, cardHeight);
-                        cb.AddImage(reverse);
-                        x++;
-                        if (x >= cardsInX)
+                        x = 0;
+                        y++;
+                        if (y >= cardsInY)
                         {
-                            x = 0;
-                            y++;
-                            if (y >= cardsInY)
+                            y = 0;
+                            doc.NewPage();
+
+                            for (int z = 0; z < temp.Count; z++)
                             {
-                                y = 0;
-                                doc.NewPage();
-                                break;
+                                var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
+                                reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * temp[z].width), y * temp[z].height); //dodac spaces
+                                reverse.ScaleAbsolute(cardWidth, cardHeight);
+                                cb.AddImage(reverse);
+                                x++;
+                                if (x >= cardsInX)
+                                {
+                                    x = 0;
+                                    y++;
+                                    if (y >= cardsInY)
+                                    {
+                                        y = 0;
+                                        doc.NewPage();
+                                        break;
+                                    }
+                                }
                             }
+                            temp.Clear();
                         }
                     }
-                }*/
 
-                if (x >= cardsInX)
-                {
-                    x = 0;
-                    y++;
-                    if (y >= cardsInY)
+
+                    else if (i >= a && i == cards.Count - 1) //gdy aktualna strona jest niezapelniona i przeanalizowalismy ostatnia karte
                     {
-                        y = 0;
                         doc.NewPage();
+                        y = 0;
+                        x = 0;
 
                         for (int z = 0; z < temp.Count; z++)
                         {
                             var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
-                            reverse.SetAbsolutePosition(reverse_margin + x * temp[z].width, y * temp[z].height);
+                            reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * temp[z].width), y * temp[z].height); //dodac spaces
                             reverse.ScaleAbsolute(cardWidth, cardHeight);
                             cb.AddImage(reverse);
                             x++;
@@ -200,22 +223,21 @@ namespace Cards
                                 }
                             }
                         }
-                        temp.Clear();
                     }
+
                 }
-
-                
+                doc.Close();
             }
-            doc.Close();
 
-            //image.RotationDegrees = 90;
-            //za malo tyłów
-            //dodac przerwy
+            catch (Exception ex)
+            {
+                MessageBox.Show("Utworzenie pliku nie powiodło się.");
+            }
         }
 
         private void b_add_Click(object sender, EventArgs e)
         {
-            //dodaje obiekt noewj karty do listy gotowych kart 
+            //dodaje obiekt nowej karty do listy gotowych kart 
             Card c;
             c = new Card();
             c.frontPath = list_box.SelectedItem.ToString();

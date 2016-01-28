@@ -157,7 +157,7 @@
             this.tb_space.Name = "tb_space";
             this.tb_space.Size = new System.Drawing.Size(57, 20);
             this.tb_space.TabIndex = 11;
-            this.tb_space.Text = "10";
+            this.tb_space.Text = "0";
             // 
             // pic_front
             // 
@@ -277,6 +277,10 @@
             this.label2.Size = new System.Drawing.Size(135, 13);
             this.label2.TabIndex = 24;
             this.label2.Text = "Pliki i ich ilości na wydruku:";
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "\"pdf\"";
             // 
             // Form1
             // 
