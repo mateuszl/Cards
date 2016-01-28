@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using iTextSharp;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace Cards
-/* TODO
+/* TODO:
+ * 
  * dodac --- image.RotationDegrees = 90;
  * dodac obsluge przerw /space
+ * zapis/odczyt xml
  * 
  * czemu nie dzialaja marginesy?
  * czemu nie dziala sugestia rozszerzenia?
  * 
- * 
+ * uruchomienie metody XMLowej w b_Load albo gdzies
  * 
  * 
  * 
@@ -35,7 +32,7 @@ namespace Cards
 
         public override string ToString()
         {
-            return name.Substring(name.LastIndexOf("\\") + 1) + "   x " + quantity;
+            return name.Substring(name.LastIndexOf("\\") + 1) + "   x " + quantity + " szt.";
         }
     }
 
@@ -59,11 +56,6 @@ namespace Cards
             cards = new List<Card>();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void list_box_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -80,7 +72,6 @@ namespace Cards
         private void b_katalog_Click(object sender, EventArgs e)
         {
             list_box.Items.Clear();
-
             try
             {
                 FolderBrowserDialog fbd = new FolderBrowserDialog();
@@ -131,20 +122,17 @@ namespace Cards
                 k.width = cardWidth;
                 cards[i] = k;
             }
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.DefaultExt = ".pdf";
-            sfd.AddExtension = true;
-            sfd.ShowDialog();
+
+            saveFileDialog1.ShowDialog();
 
             iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4);
             doc.SetMargins(20, 20, 10, 10);
 
             try
             {
-                iTextSharp.text.pdf.PdfWriter writer = iTextSharp.text.pdf.PdfWriter.GetInstance(doc, new System.IO.FileStream(sfd.FileName, System.IO.FileMode.OpenOrCreate));
+                iTextSharp.text.pdf.PdfWriter writer = iTextSharp.text.pdf.PdfWriter.GetInstance(doc, new System.IO.FileStream(saveFileDialog1.FileName, System.IO.FileMode.OpenOrCreate));
                 doc.Open();
                 iTextSharp.text.pdf.PdfContentByte cb = writer.DirectContent;
-
 
                 int cardsInX = Convert.ToInt16((mm2point(210) + space) / (cardWidth + space));
                 int cardsInY = Convert.ToInt16((mm2point(297) + space) / (cardHeight + space));
@@ -173,7 +161,6 @@ namespace Cards
                         {
                             y = 0;
                             doc.NewPage();
-
                             for (int z = 0; z < temp.Count; z++)
                             {
                                 var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
@@ -196,14 +183,11 @@ namespace Cards
                             temp.Clear();
                         }
                     }
-
-
                     else if (i >= a && i == cards.Count - 1) //gdy aktualna strona jest niezapelniona i przeanalizowalismy ostatnia karte
                     {
                         doc.NewPage();
                         y = 0;
                         x = 0;
-
                         for (int z = 0; z < temp.Count; z++)
                         {
                             var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
@@ -224,15 +208,14 @@ namespace Cards
                             }
                         }
                     }
-
                 }
                 doc.Close();
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show("Utworzenie pliku nie powiodło się.");
             }
+            MessageBox.Show("Plik pdf został utworzony!");
         }
 
         private void b_add_Click(object sender, EventArgs e)
@@ -307,6 +290,15 @@ namespace Cards
                 default:
                     break;
             }
+        }
+
+        private bool XML_export(Card c)
+        {
+            var serializer = new XmlSerializer(typeof(Card));
+            var stream = new MemoryStream();
+            serializer.Serialize(stream, c);
+            stream.Flush();
+            return true;
         }
     }
 }

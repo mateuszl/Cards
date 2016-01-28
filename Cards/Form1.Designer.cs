@@ -280,7 +280,8 @@
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.DefaultExt = "\"pdf\"";
+            this.saveFileDialog1.DefaultExt = "\".pdf\"";
+            this.saveFileDialog1.Filter = "\"Pdf files|*.pdf|All files|*.*\"";
             // 
             // Form1
             // 
