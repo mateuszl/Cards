@@ -32,14 +32,14 @@ namespace Cards
         List<Card> cards;
 
         //komp w pracy
-        //string frontsDefaultPath = @"C:\temp\fronts";
-        //string reversesPath = @"C:\temp\back";
-        //string defaultReversePath = @"C:\temp\back\back_default.png";
+        string frontsDefaultPath = @"C:\temp\fronts";
+        string reversesPath = @"C:\temp\back";
+        string defaultReversePath = @"C:\temp\back\back_default.png";
 
         // komp w domu
-        string frontsDefaultPath = @"D:\temp\fronts";
-        string reversesPath = @"D:\temp\back";
-        string defaultReversePath = @"D:\temp\back\back_default.png";
+        //string frontsDefaultPath = @"D:\temp\fronts";
+        //string reversesPath = @"D:\temp\back";
+        //string defaultReversePath = @"D:\temp\back\back_default.png";
 
         public Form1()
         {
@@ -78,7 +78,6 @@ namespace Cards
                 string[] files = System.IO.Directory.GetFiles(path, "*.jpg");
                 System.Windows.Forms.MessageBox.Show("Załadowano plików: " + files.Length.ToString(), "Message");
                 list_box.Items.AddRange(files);
-                list_box.DisplayMember.TrimStart(path.ToCharArray());
             }
             catch (Exception ex)
             {
@@ -99,6 +98,90 @@ namespace Cards
         private void b_generate_Click(object sender, EventArgs e)
         {
             //generuje pdf
+            float cardHeight = 0;
+            float cardWidth = 0;
+            try
+            {
+                cardHeight = mm2point((float.Parse(tb_height.Text)));
+                cardWidth = mm2point((float.Parse(tb_width.Text)));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Złe wymiary karty");
+            }
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                Card k = cards[i];
+                k.height = cardHeight;
+                k.width = cardWidth;
+                cards[i] = k;
+            }
+
+            saveFileDialog1.ShowDialog();
+
+            iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4);
+            iTextSharp.text.pdf.PdfWriter writer = iTextSharp.text.pdf.PdfWriter.GetInstance(doc, new System.IO.FileStream(saveFileDialog1.FileName, System.IO.FileMode.OpenOrCreate));
+
+            doc.Open();
+            iTextSharp.text.pdf.PdfContentByte cb = writer.DirectContent;
+            doc.NewPage();
+            int cardsInX = Convert.ToInt16(mm2point(210) / cardWidth);
+            int cardsInY = Convert.ToInt16(mm2point(297) / cardHeight);
+
+            float reverse_margin = mm2point(210) - cardsInX * cardWidth - doc.LeftMargin;
+
+            int x = 0;
+            int y = 0;
+
+            List<Card> temp = new List<Card>();
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                var img = iTextSharp.text.Image.GetInstance(cards[i].frontPath);
+                img.SetAbsolutePosition(doc.LeftMargin + x * cards[i].width, y * cards[i].height);
+                img.ScaleAbsolute(cardWidth, cardHeight);
+                cb.AddImage(img);
+                temp.Add(cards[i]);
+                x++;
+
+                if (x >= cardsInX)
+                {
+                    x = 0;
+                    y++;
+                    if (y >= cardsInY)
+                    {
+                        y = 0;
+                        doc.NewPage();
+
+                        for (int z = 0; z < temp.Count; z++)
+                        {
+                            var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
+                            reverse.SetAbsolutePosition(reverse_margin + x * temp[z].width, y * temp[z].height);
+                            reverse.ScaleAbsolute(cardWidth, cardHeight);
+                            cb.AddImage(reverse);
+                            x++;
+                            if (x >= cardsInX)
+                            {
+                                x = 0;
+                                y++;
+                                if (y >= cardsInY)
+                                {
+                                    y = 0;
+                                    doc.NewPage();
+                                    break;
+                                }
+                            }
+                        }
+                        temp.Clear();
+                    }
+                }
+            }
+            doc.Close();
+
+            //image.RotationDegrees = 90;
+            //za malo tyłów
+            //dodac przerwy
         }
 
         private void b_add_Click(object sender, EventArgs e)
@@ -112,7 +195,10 @@ namespace Cards
             c.quantity = ud_quantity.Value;
             c.width = float.Parse(tb_width.Text, System.Globalization.CultureInfo.InvariantCulture);
             c.height = float.Parse(tb_height.Text, System.Globalization.CultureInfo.InvariantCulture);
-            cards.Add(c);
+            for (int i = 1; i <= c.quantity; i++)
+            {
+                cards.Add(c);
+            }
             list_box_c.Items.Add(c); //wyswietlenie tworzonych obiektow na drugiej liscie
         }
 
@@ -155,6 +241,20 @@ namespace Cards
                 object item = list_box_c.SelectedItem;
                 cards.RemoveAt(list_box_c.SelectedIndex);
                 list_box_c.Items.Remove(item);
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            if (e.CloseReason == CloseReason.WindowsShutDown) return;
+            switch (MessageBox.Show(this, "Czy na pewno chcesz zamknąć program?", "Closing", MessageBoxButtons.YesNo))
+            {
+                case DialogResult.No:
+                    e.Cancel = true;
+                    break;
+                default:
+                    break;
             }
         }
     }
