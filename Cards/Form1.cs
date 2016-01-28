@@ -145,6 +145,33 @@ namespace Cards
                 temp.Add(cards[i]);
                 x++;
 
+                /*
+                if (temp.Count < cardsInX*cardsInY) //źle, ale musi byc jakis warunek że jak strona nie jest pelna to i tak dodaje tyly
+                {
+                    doc.NewPage();
+                    y = 0;
+
+                    for (int z = 0; z < temp.Count; z++)
+                    {
+                        var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
+                        reverse.SetAbsolutePosition(reverse_margin + x * temp[z].width, y * temp[z].height);
+                        reverse.ScaleAbsolute(cardWidth, cardHeight);
+                        cb.AddImage(reverse);
+                        x++;
+                        if (x >= cardsInX)
+                        {
+                            x = 0;
+                            y++;
+                            if (y >= cardsInY)
+                            {
+                                y = 0;
+                                doc.NewPage();
+                                break;
+                            }
+                        }
+                    }
+                }*/
+
                 if (x >= cardsInX)
                 {
                     x = 0;
@@ -176,6 +203,8 @@ namespace Cards
                         temp.Clear();
                     }
                 }
+
+                
             }
             doc.Close();
 
