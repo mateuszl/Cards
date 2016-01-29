@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using iTextSharp;
 using System.Xml.Serialization;
 using System.IO;
+using System.Drawing;
 
 namespace Cards
 /* TODO:
@@ -41,14 +42,14 @@ namespace Cards
         List<Card> cards;
 
         //komp w pracy
-        //string frontsDefaultPath = @"C:\temp\fronts";
-        //string reversesPath = @"C:\temp\back";
-        //string defaultReversePath = @"C:\temp\back\back_default.png";
+        string frontsDefaultPath = @"C:\temp\fronts";
+        string reversesPath = @"C:\temp\back";
+        string defaultReversePath = @"C:\temp\back\back_default.png";
 
         // komp w domu
-        string frontsDefaultPath = @"D:\temp\fronts";
-        string reversesPath = @"D:\temp\back";
-        string defaultReversePath = @"D:\temp\back\back_default.png";
+        //string frontsDefaultPath = @"D:\temp\fronts";
+        //string reversesPath = @"D:\temp\back";
+        //string defaultReversePath = @"D:\temp\back\back_default.png";
 
         public Form1()
         {
@@ -61,7 +62,7 @@ namespace Cards
             try
             {
                 pic_front.ImageLocation = list_box.SelectedItem.ToString();
-                pic_front.SizeMode = PictureBoxSizeMode.StretchImage;
+                pic_front.SizeMode = PictureBoxSizeMode.Zoom;
             }
             catch (Exception ex)
             {
@@ -78,9 +79,15 @@ namespace Cards
                 fbd.SelectedPath = frontsDefaultPath;
                 DialogResult result = fbd.ShowDialog();
                 string path = fbd.SelectedPath;
-                string[] files = System.IO.Directory.GetFiles(path, "*.jpg");
+                string[] files = System.IO.Directory.GetFiles(path);
                 System.Windows.Forms.MessageBox.Show("Załadowano plików: " + files.Length.ToString(), "Message");
-                list_box.Items.AddRange(files);
+                foreach (string file in files)
+                {
+                    if (file.Contains("jpg") | file.Contains("png"))
+                    {
+                        list_box.Items.Add(file);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -118,8 +125,16 @@ namespace Cards
             for (int i = 0; i < cards.Count; i++)
             {
                 Card k = cards[i];
+                if (k.height > k.width) //zle - znalezc warunek na odwracanie
+                {
                 k.height = cardHeight;
                 k.width = cardWidth;
+                }
+                else
+                {
+                    k.height = cardWidth;
+                    k.width = cardHeight;
+                }
                 cards[i] = k;
             }
 
@@ -147,7 +162,15 @@ namespace Cards
                 for (int i = 0; i < cards.Count; i++)
                 {
                     var img = iTextSharp.text.Image.GetInstance(cards[i].frontPath);
-                    img.SetAbsolutePosition(doc.LeftMargin + x * cards[i].width, y * cards[i].height); //dodac spaces
+                    //if (cards[i].width < cards[i].height)
+                    //{
+                        img.SetAbsolutePosition(doc.LeftMargin + x * cards[i].width, y * cards[i].height); //dodac spaces
+                    //}
+                    //else
+                    //{
+                    //    img.SetAbsolutePosition(doc.LeftMargin + x * cards[i].height, y * cards[i].width); //dodac spaces
+                    //    img.RotationDegrees = 90;
+                    //}
                     img.ScaleAbsolute(cardWidth, cardHeight);
                     cb.AddImage(img);
                     temp.Add(cards[i]);
@@ -251,6 +274,7 @@ namespace Cards
         private void b_customBack_Click(object sender, EventArgs e)
         {
             //dodac jakieś wyrzucenie tego co juz jest ustawione jako obrazek
+
             try
             {
                 OpenFileDialog dialog = new OpenFileDialog();
