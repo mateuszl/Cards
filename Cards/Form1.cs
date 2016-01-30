@@ -12,9 +12,9 @@ namespace Cards
  * dodac --- image.RotationDegrees = 90;
  * dodac obsluge przerw /space
  * zapis/odczyt xml
- * marginesy dolny górny
  * 
  * czemu nie dzialaja marginesy?
+ * czemu nie dziala sugestia rozszerzenia?
  * 
  * uruchomienie metody XMLowej w b_Load albo gdzies
  * 
@@ -42,14 +42,14 @@ namespace Cards
         List<Card> cards;
 
         //komp w pracy
-        //string frontsDefaultPath = @"C:\temp\fronts";
-        //string reversesPath = @"C:\temp\back";
-        //string defaultReversePath = @"C:\temp\back\back_default.png";
+        string frontsDefaultPath = @"C:\temp\fronts";
+        string reversesPath = @"C:\temp\back";
+        string defaultReversePath = @"C:\temp\back\back_default.png";
 
         // komp w domu
-        string frontsDefaultPath = @"D:\temp\fronts";
-        string reversesPath = @"D:\temp\back";
-        string defaultReversePath = @"D:\temp\back\back_default.png";
+        //string frontsDefaultPath = @"D:\temp\fronts";
+        //string reversesPath = @"D:\temp\back";
+        //string defaultReversePath = @"D:\temp\back\back_default.png";
 
         public Form1()
         {
@@ -114,29 +114,28 @@ namespace Cards
 
             try
             {
-                for (int i = 0; i < cards.Count; i++)
-                {
-                    if (Image.FromFile(cards[i].frontPath).Height > Image.FromFile(cards[i].frontPath).Width)
-                    {
-                        cardHeight = mm2point((float.Parse(tb_height.Text)));
-                        cardWidth = mm2point((float.Parse(tb_width.Text)));
-                    }
-                    else
-                    {
-                        cardHeight = mm2point((float.Parse(tb_width.Text)));
-                        cardWidth = mm2point((float.Parse(tb_height.Text)));
-                    }
-
-                    Card k = cards[i];
-                    k.height = cardHeight;
-                    k.width = cardWidth;
-
-                    cards[i] = k;
-                }
+                cardHeight = mm2point((float.Parse(tb_height.Text)));
+                cardWidth = mm2point((float.Parse(tb_width.Text)));
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Złe wymiary karty!");
+            }
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                Card k = cards[i];
+                if (k.height > k.width) //zle - znalezc warunek na odwracanie
+                {
+                k.height = cardHeight;
+                k.width = cardWidth;
+                }
+                else
+                {
+                    k.height = cardWidth;
+                    k.width = cardHeight;
+                }
+                cards[i] = k;
             }
 
             saveFileDialog1.ShowDialog();
@@ -163,19 +162,16 @@ namespace Cards
                 for (int i = 0; i < cards.Count; i++)
                 {
                     var img = iTextSharp.text.Image.GetInstance(cards[i].frontPath);
-
-                    if (Image.FromFile(cards[i].frontPath).Height > Image.FromFile(cards[i].frontPath).Width)
-                    {
+                    //if (cards[i].width < cards[i].height)
+                    //{
                         img.SetAbsolutePosition(doc.LeftMargin + x * cards[i].width, y * cards[i].height); //dodac spaces
-                        img.ScaleAbsolute(cardWidth, cardHeight);
-                    }
-                    else
-                    {
-                        img.SetAbsolutePosition(doc.LeftMargin + x * cards[i].height, y * cards[i].width); //dodac spaces
-                        img.RotationDegrees = 90;
-                        img.ScaleAbsolute(cardHeight, cardWidth);
-                    }
-
+                    //}
+                    //else
+                    //{
+                    //    img.SetAbsolutePosition(doc.LeftMargin + x * cards[i].height, y * cards[i].width); //dodac spaces
+                    //    img.RotationDegrees = 90;
+                    //}
+                    img.ScaleAbsolute(cardWidth, cardHeight);
                     cb.AddImage(img);
                     temp.Add(cards[i]);
                     x++;
