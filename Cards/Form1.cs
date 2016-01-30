@@ -9,8 +9,6 @@ using System.Drawing;
 namespace Cards
 /* TODO:
  * 
- * usuwanie pozycji nie usuwa wszystkich instancji z listy kart
- * 
  * zapis/odczyt xml
  * 
  * uruchomienie metody XMLowej w b_Load albo gdzies
@@ -289,7 +287,7 @@ namespace Cards
             if (list_box_c.SelectedIndex != -1)
             {
                 object item = list_box_c.SelectedItem;
-                cards.RemoveAt(list_box_c.SelectedIndex);
+                cards.RemoveAll(s => s.ToString() == item.ToString());
                 list_box_c.Items.Remove(item);
             }
         }
