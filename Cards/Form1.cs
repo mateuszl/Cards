@@ -17,7 +17,8 @@ namespace Cards
  * 
  */
 {
-    struct Card
+    [Serializable]
+    public struct Card
     {
         public string name;
         public string frontPath;
@@ -32,9 +33,16 @@ namespace Cards
         }
     }
 
+    [Serializable]
+    [XmlRoot("Form1")]
+    [XmlInclude(typeof(Card))]
     public partial class Form1 : Form
     {
-        List<Card> cards;
+        //List<Card> cards;
+
+        [XmlArray("CardList"), XmlArrayItem(typeof(Card), ElementName = "Card")]
+        public List<Card> cards {get;set;}
+
 
         //komp w pracy
         //string frontsDefaultPath = @"C:\temp\fronts";
@@ -88,16 +96,6 @@ namespace Cards
             {
                 MessageBox.Show("Coś sie nie udało");
             }
-        }
-
-        private void b_load_Click(object sender, EventArgs e)
-        {
-            //wczytuje zapisany status z xml
-        }
-
-        private void b_save_Click(object sender, EventArgs e)
-        {
-            //zapisuje status do xml
         }
 
         private void b_generate_Click(object sender, EventArgs e)
@@ -306,13 +304,29 @@ namespace Cards
             }
         }
 
-        private bool XML_export(Card c)
+        private bool XML_export(List<Card> c)
         {
-            var serializer = new XmlSerializer(typeof(Card));
-            var stream = new MemoryStream();
-            serializer.Serialize(stream, c);
-            stream.Flush();
+            FileStream fs = new FileStream("c:\\temp\\test.xml", FileMode.OpenOrCreate);
+            System.Xml.Serialization.XmlSerializer s = new System.Xml.Serialization.XmlSerializer(typeof(List<Card>));
+
+            s.Serialize(fs, c);
+
+            fs.Dispose();
             return true;
+        }
+
+        private void b_load_Click(object sender, EventArgs e)
+        {
+            //wczytuje zapisany status z xml
+        }
+
+        private void b_save_Click(object sender, EventArgs e)
+        {
+            //zapisuje status do xml
+            
+            XML_export(cards);
+            
+            MessageBox.Show("Wyeksportowano plik xml");
         }
     }
 }
