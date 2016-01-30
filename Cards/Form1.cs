@@ -9,11 +9,9 @@ using System.Drawing;
 namespace Cards
 /* TODO:
  * 
- * dodac obsluge przerw /space
- * zapis/odczyt xml
- * marginesy dolny górny
+ * usuwanie pozycji nie usuwa wszystkich instancji z listy kart
  * 
- * czemu nie dzialaja marginesy?
+ * zapis/odczyt xml
  * 
  * uruchomienie metody XMLowej w b_Load albo gdzies
  * 
@@ -109,7 +107,7 @@ namespace Cards
             //generuje pdf
             float cardHeight = 0;
             float cardWidth = 0;
-            float space = mm2point(float.Parse(tb_space.Text));
+            float space = mm2point(float.Parse(ud_spaces.Text));
 
             try
             {
@@ -132,8 +130,8 @@ namespace Cards
 
             saveFileDialog1.ShowDialog();
 
-            iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4);
-            doc.SetMargins(20, 20, 10, 10);
+            iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4, 5,5,10,10);
+
 
             try
             {
@@ -141,8 +139,8 @@ namespace Cards
                 doc.Open();
                 iTextSharp.text.pdf.PdfContentByte cb = writer.DirectContent;
 
-                int cardsInX = Convert.ToInt16((mm2point(210) + space) / (cardWidth + space));
-                int cardsInY = Convert.ToInt16((mm2point(297) + space) / (cardHeight + space));
+                int cardsInX = Convert.ToInt16((mm2point(210) + space - doc.LeftMargin - doc.RightMargin) / (cardWidth + space));
+                int cardsInY = Convert.ToInt16((mm2point(297) + space - doc.BottomMargin - doc.TopMargin) / (cardHeight + space));
                 float reverse_margin = mm2point(210) + space - cardsInX * (cardWidth + space) - doc.LeftMargin;
                 int x = 0;
                 int y = 0;
@@ -154,7 +152,7 @@ namespace Cards
                 for (int i = 0; i < cards.Count; i++)
                 {
                     var img = iTextSharp.text.Image.GetInstance(cards[i].frontPath);
-                    img.SetAbsolutePosition(doc.LeftMargin + x * (cards[i].width+space), y * (cards[i].height + space)); //dodac spaces
+                    img.SetAbsolutePosition(doc.LeftMargin + x * (cards[i].width+space), doc.BottomMargin + y * (cards[i].height + space)); //dodac spaces
 
                     if (Image.FromFile(cards[i].frontPath).Height > Image.FromFile(cards[i].frontPath).Width)
                     {
@@ -181,7 +179,7 @@ namespace Cards
                             for (int z = 0; z < temp.Count; z++)
                             {
                                 var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
-                                reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * (temp[z].width+space)), y * (temp[z].height + space)); //dodac spaces
+                                reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * (temp[z].width + space)), doc.BottomMargin + y * (temp[z].height + space)); //dodac spaces
                                 reverse.ScaleAbsolute(cardWidth, cardHeight);
                                 cb.AddImage(reverse);
                                 x++;
@@ -208,7 +206,7 @@ namespace Cards
                         for (int z = 0; z < temp.Count; z++)
                         {
                             var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
-                            reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * (temp[z].width + space)), y * (temp[z].height + space)); //dodac spaces
+                            reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * (temp[z].width + space)), doc.BottomMargin + y * (temp[z].height + space)); //dodac spaces
                             reverse.ScaleAbsolute(cardWidth, cardHeight);
                             cb.AddImage(reverse);
                             x++;
