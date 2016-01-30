@@ -9,7 +9,6 @@ using System.Drawing;
 namespace Cards
 /* TODO:
  * 
- * dodac --- image.RotationDegrees = 90;
  * dodac obsluge przerw /space
  * zapis/odczyt xml
  * marginesy dolny górny
@@ -18,7 +17,7 @@ namespace Cards
  * 
  * uruchomienie metody XMLowej w b_Load albo gdzies
  * 
- * 
+ * wyjecie metod na zewnatrz?
  * 
  */
 {
@@ -110,7 +109,7 @@ namespace Cards
             //generuje pdf
             float cardHeight = 0;
             float cardWidth = 0;
-            float space = float.Parse(tb_space.Text);
+            float space = mm2point(float.Parse(tb_space.Text));
 
             try
             {
@@ -155,7 +154,7 @@ namespace Cards
                 for (int i = 0; i < cards.Count; i++)
                 {
                     var img = iTextSharp.text.Image.GetInstance(cards[i].frontPath);
-                    img.SetAbsolutePosition(doc.LeftMargin + x * cards[i].width, y * cards[i].height); //dodac spaces
+                    img.SetAbsolutePosition(doc.LeftMargin + x * (cards[i].width+space), y * (cards[i].height + space)); //dodac spaces
 
                     if (Image.FromFile(cards[i].frontPath).Height > Image.FromFile(cards[i].frontPath).Width)
                     {
@@ -182,7 +181,7 @@ namespace Cards
                             for (int z = 0; z < temp.Count; z++)
                             {
                                 var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
-                                reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * temp[z].width), y * temp[z].height); //dodac spaces
+                                reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * (temp[z].width+space)), y * (temp[z].height + space)); //dodac spaces
                                 reverse.ScaleAbsolute(cardWidth, cardHeight);
                                 cb.AddImage(reverse);
                                 x++;
@@ -209,7 +208,7 @@ namespace Cards
                         for (int z = 0; z < temp.Count; z++)
                         {
                             var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
-                            reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * temp[z].width), y * temp[z].height); //dodac spaces
+                            reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * (temp[z].width + space)), y * (temp[z].height + space)); //dodac spaces
                             reverse.ScaleAbsolute(cardWidth, cardHeight);
                             cb.AddImage(reverse);
                             x++;
