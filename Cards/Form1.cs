@@ -116,17 +116,9 @@ namespace Cards
             {
                 for (int i = 0; i < cards.Count; i++)
                 {
-                    if (Image.FromFile(cards[i].frontPath).Height > Image.FromFile(cards[i].frontPath).Width)
-                    {
-                        cardHeight = mm2point((float.Parse(tb_height.Text)));
-                        cardWidth = mm2point((float.Parse(tb_width.Text)));
-                    }
-                    else
-                    {
-                        cardHeight = mm2point((float.Parse(tb_width.Text)));
-                        cardWidth = mm2point((float.Parse(tb_height.Text)));
-                    }
 
+                    cardHeight = mm2point((float.Parse(tb_height.Text)));
+                    cardWidth = mm2point((float.Parse(tb_width.Text)));
                     Card k = cards[i];
                     k.height = cardHeight;
                     k.width = cardWidth;
@@ -155,7 +147,7 @@ namespace Cards
                 float reverse_margin = mm2point(210) + space - cardsInX * (cardWidth + space) - doc.LeftMargin;
                 int x = 0;
                 int y = 0;
-                int a = (cards.Count - (cards.Count % (cardsInX * cardsInY))); 
+                int a = (cards.Count - (cards.Count % (cardsInX * cardsInY)));
 
                 List<Card> temp = new List<Card>();
 
@@ -163,15 +155,14 @@ namespace Cards
                 for (int i = 0; i < cards.Count; i++)
                 {
                     var img = iTextSharp.text.Image.GetInstance(cards[i].frontPath);
+                    img.SetAbsolutePosition(doc.LeftMargin + x * cards[i].width, y * cards[i].height); //dodac spaces
 
                     if (Image.FromFile(cards[i].frontPath).Height > Image.FromFile(cards[i].frontPath).Width)
                     {
-                        img.SetAbsolutePosition(doc.LeftMargin + x * cards[i].width, y * cards[i].height); //dodac spaces
                         img.ScaleAbsolute(cardWidth, cardHeight);
                     }
                     else
                     {
-                        img.SetAbsolutePosition(doc.LeftMargin + x * cards[i].height, y * cards[i].width); //dodac spaces
                         img.RotationDegrees = 90;
                         img.ScaleAbsolute(cardHeight, cardWidth);
                     }
