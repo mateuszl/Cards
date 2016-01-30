@@ -29,7 +29,8 @@ namespace Cards
 
         public override string ToString()
         {
-            return name.Substring(name.LastIndexOf("\\") + 1) + "   x " + quantity + " szt.";
+            return name;
+            //return name.Substring(name.LastIndexOf("\\") + 1) + "   x " + quantity + " szt.";
         }
     }
 
@@ -38,11 +39,8 @@ namespace Cards
     [XmlInclude(typeof(Card))]
     public partial class Form1 : Form
     {
-        //List<Card> cards;
-
         [XmlArray("CardList"), XmlArrayItem(typeof(Card), ElementName = "Card")]
-        public List<Card> cards {get;set;}
-
+        public List<Card> cards { get; set; }
 
         //komp w pracy
         //string frontsDefaultPath = @"C:\temp\fronts";
@@ -53,6 +51,7 @@ namespace Cards
         string frontsDefaultPath = @"D:\temp\fronts";
         string reversesPath = @"D:\temp\back";
         string defaultReversePath = @"D:\temp\back\back_default.png";
+        string defaultPath = @"D:\temp";
 
         public Form1()
         {
@@ -126,8 +125,7 @@ namespace Cards
 
             saveFileDialog1.ShowDialog();
 
-            iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4, 5,5,10,10);
-
+            iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4, 10, 10, 30, 30);
 
             try
             {
@@ -148,7 +146,7 @@ namespace Cards
                 for (int i = 0; i < cards.Count; i++)
                 {
                     var img = iTextSharp.text.Image.GetInstance(cards[i].frontPath);
-                    img.SetAbsolutePosition(doc.LeftMargin + x * (cards[i].width+space), doc.BottomMargin + y * (cards[i].height + space)); //dodac spaces
+                    img.SetAbsolutePosition(doc.LeftMargin + x * (cards[i].width + space), doc.BottomMargin + y * (cards[i].height + space)); //dodac spaces
 
                     if (Image.FromFile(cards[i].frontPath).Height > Image.FromFile(cards[i].frontPath).Width)
                     {
@@ -232,19 +230,32 @@ namespace Cards
         private void b_add_Click(object sender, EventArgs e)
         {
             //dodaje obiekt nowej karty do listy gotowych kart 
-            Card c;
-            c = new Card();
-            c.frontPath = list_box.SelectedItem.ToString();
-            c.reversePath = pic_back.ImageLocation;
-            c.name = list_box.SelectedItem.ToString().TrimStart(frontsDefaultPath.ToCharArray());
-            c.quantity = ud_quantity.Value;
-            c.width = float.Parse(tb_width.Text, System.Globalization.CultureInfo.InvariantCulture);
-            c.height = float.Parse(tb_height.Text, System.Globalization.CultureInfo.InvariantCulture);
-            for (int i = 1; i <= c.quantity; i++)
+            if (pic_back.ImageLocation == null)
             {
-                cards.Add(c);
+                pic_back.ImageLocation = defaultReversePath;
+                pic_back.SizeMode = PictureBoxSizeMode.StretchImage;
             }
-            list_box_c.Items.Add(c); //wyswietlenie tworzonych obiektow na drugiej liscie
+
+            try
+            {
+                Card c;
+                c = new Card();
+                c.frontPath = list_box.SelectedItem.ToString();
+                c.reversePath = pic_back.ImageLocation;
+                c.name = list_box.SelectedItem.ToString().Substring(c.frontPath.LastIndexOf("\\") + 1);
+                c.quantity = ud_quantity.Value;
+                c.width = float.Parse(tb_width.Text, System.Globalization.CultureInfo.InvariantCulture);
+                c.height = float.Parse(tb_height.Text, System.Globalization.CultureInfo.InvariantCulture);
+                for (int i = 1; i <= c.quantity; i++)
+                {
+                    cards.Add(c);
+                    list_box_c.Items.Add(c); //wyswietlenie tworzonych obiektow na drugiej liscie
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Nie udało się dodać karty");
+            }
         }
 
         private void b_default_Click(object sender, EventArgs e)
@@ -306,11 +317,10 @@ namespace Cards
 
         private bool XML_export(List<Card> c)
         {
-            FileStream fs = new FileStream("c:\\temp\\test.xml", FileMode.OpenOrCreate);
+            saveFileDialog2.ShowDialog();
+            FileStream fs = new FileStream(saveFileDialog2.FileName, FileMode.OpenOrCreate);
             System.Xml.Serialization.XmlSerializer s = new System.Xml.Serialization.XmlSerializer(typeof(List<Card>));
-
             s.Serialize(fs, c);
-
             fs.Dispose();
             return true;
         }
@@ -318,15 +328,35 @@ namespace Cards
         private void b_load_Click(object sender, EventArgs e)
         {
             //wczytuje zapisany status z xml
+
+            cards.Clear();
+            list_box_c.Items.Clear();
+
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "All files (*.*)|*.*|XML Files (*.xml)|*.xml";
+            dialog.InitialDirectory = defaultPath;
+            dialog.Title = "Wybierz plik xml do wczytania";
+            DialogResult result = dialog.ShowDialog();
+            //string file = dialog.ToString();
+
+            FileStream fs = new FileStream(dialog.FileName, FileMode.Open);
+            System.Xml.Serialization.XmlSerializer s = new System.Xml.Serialization.XmlSerializer(typeof(List<Card>));
+
+            cards = (List<Card>)s.Deserialize(fs);
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                list_box_c.Items.Add(cards[i]);
+            }
+            MessageBox.Show("Wczytano listę plików");
         }
 
         private void b_save_Click(object sender, EventArgs e)
         {
             //zapisuje status do xml
-            
+
             XML_export(cards);
-            
-            MessageBox.Show("Wyeksportowano plik xml");
+            MessageBox.Show("Zapisano listę plików");
         }
     }
 }

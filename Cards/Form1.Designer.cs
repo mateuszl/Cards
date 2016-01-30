@@ -52,8 +52,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.ud_spaces = new System.Windows.Forms.NumericUpDown();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pic_front)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_back)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ud_quantity)).BeginInit();
@@ -283,7 +284,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(231, 87);
+            this.label1.Location = new System.Drawing.Point(231, 86);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(121, 20);
@@ -296,14 +297,9 @@
             this.label2.Location = new System.Drawing.Point(1231, 88);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(193, 20);
+            this.label2.Size = new System.Drawing.Size(182, 20);
             this.label2.TabIndex = 24;
-            this.label2.Text = "Pliki i ich ilości na wydruku:";
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.DefaultExt = "\".pdf\"";
-            this.saveFileDialog1.Filter = "\"Pdf files|*.pdf|All files|*.*\"";
+            this.label2.Text = "Pliki dodane do wydruku:";
             // 
             // ud_spaces
             // 
@@ -317,6 +313,18 @@
             this.ud_spaces.Size = new System.Drawing.Size(87, 26);
             this.ud_spaces.TabIndex = 25;
             this.toolTip1.SetToolTip(this.ud_spaces, "Przerwy między kartami na wydruku w mm (0-5)");
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "\".pdf\"";
+            this.saveFileDialog1.Filter = "\"Pdf files|*.pdf|All files|*.*\"";
+            this.saveFileDialog1.InitialDirectory = "\"C/temp\"";
+            // 
+            // saveFileDialog2
+            // 
+            this.saveFileDialog2.DefaultExt = "\".xml\"";
+            this.saveFileDialog2.Filter = "\"xml files|*.xml|All files|*.*\"";
+            this.saveFileDialog2.InitialDirectory = "\"C/temp\"";
             // 
             // Form1
             // 
@@ -388,6 +396,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.NumericUpDown ud_spaces;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog2;
     }
 }
 
