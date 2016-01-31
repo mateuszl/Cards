@@ -317,14 +317,14 @@
             // saveFileDialog1
             // 
             this.saveFileDialog1.DefaultExt = "\".pdf\"";
-            this.saveFileDialog1.Filter = "\"Pdf files|*.pdf|All files|*.*\"";
-            this.saveFileDialog1.InitialDirectory = "\"C/temp\"";
+            this.saveFileDialog1.Filter = "PDF files|*.pdf|All files|*.*";
+            this.saveFileDialog1.InitialDirectory = "\"D/temp\"";
             // 
             // saveFileDialog2
             // 
             this.saveFileDialog2.DefaultExt = "\".xml\"";
-            this.saveFileDialog2.Filter = "\"xml files|*.xml|All files|*.*\"";
-            this.saveFileDialog2.InitialDirectory = "\"C/temp\"";
+            this.saveFileDialog2.Filter = "XML files|*.xml|All files|*.*";
+            this.saveFileDialog2.InitialDirectory = "\"D/temp\"";
             // 
             // Form1
             // 

@@ -9,11 +9,11 @@ using System.Drawing;
 namespace Cards
 /* TODO:
  * 
- * zapis/odczyt xml
- * 
- * uruchomienie metody XMLowej w b_Load albo gdzies
- * 
  * wyjecie metod na zewnatrz?
+ *
+ * pierwotne .img wskazujace na wybor frontu i reversa?
+ * 
+ * progressbar?
  * 
  */
 {
@@ -258,11 +258,30 @@ namespace Cards
             }
         }
 
+        private void b_delete_Click(object sender, EventArgs e)
+        {
+            if (list_box_c.SelectedIndex != -1)
+            {
+                object item = list_box_c.SelectedItem;
+                //cards.RemoveAll(s => s.ToString() == item.ToString());
+                cards.Remove((Card)item);
+                list_box_c.Items.Remove(item);
+            }
+        }
+
         private void b_default_Click(object sender, EventArgs e)
         {
             //dodac jakieś wyrzucenie tego co juz jest ustawione jako obrazek
-            pic_back.ImageLocation = defaultReversePath;
-            pic_back.SizeMode = PictureBoxSizeMode.StretchImage;
+            try
+            {
+                pic_back.ImageLocation = defaultReversePath;
+                pic_back.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Nie znaleziono pliku w domyślnej lokalizacji");
+                b_customBack_Click(b_customBack,EventArgs.Empty);
+            }
         }
 
         private float mm2point(float mm)
@@ -273,6 +292,7 @@ namespace Cards
         private void b_customBack_Click(object sender, EventArgs e)
         {
             //dodac jakieś wyrzucenie tego co juz jest ustawione jako obrazek
+            
 
             try
             {
@@ -281,23 +301,12 @@ namespace Cards
                 dialog.InitialDirectory = reversesPath;
                 dialog.Title = "Wybierz rewers dla karty";
                 DialogResult result = dialog.ShowDialog();
-                string file = dialog.ToString();
-                pic_back.ImageLocation = file;
+                pic_back.ImageLocation = dialog.FileName;
                 pic_back.SizeMode = PictureBoxSizeMode.StretchImage;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Coś sie nie udało");
-            }
-        }
-
-        private void b_delete_Click(object sender, EventArgs e)
-        {
-            if (list_box_c.SelectedIndex != -1)
-            {
-                object item = list_box_c.SelectedItem;
-                cards.RemoveAll(s => s.ToString() == item.ToString());
-                list_box_c.Items.Remove(item);
             }
         }
 
@@ -317,6 +326,8 @@ namespace Cards
 
         private bool XML_export(List<Card> c)
         {
+            //zapisuje status do xml
+
             saveFileDialog2.ShowDialog();
             FileStream fs = new FileStream(saveFileDialog2.FileName, FileMode.OpenOrCreate);
             System.Xml.Serialization.XmlSerializer s = new System.Xml.Serialization.XmlSerializer(typeof(List<Card>));
@@ -337,11 +348,9 @@ namespace Cards
             dialog.InitialDirectory = defaultPath;
             dialog.Title = "Wybierz plik xml do wczytania";
             DialogResult result = dialog.ShowDialog();
-            //string file = dialog.ToString();
 
             FileStream fs = new FileStream(dialog.FileName, FileMode.Open);
             System.Xml.Serialization.XmlSerializer s = new System.Xml.Serialization.XmlSerializer(typeof(List<Card>));
-
             cards = (List<Card>)s.Deserialize(fs);
 
             for (int i = 0; i < cards.Count; i++)
@@ -353,8 +362,7 @@ namespace Cards
 
         private void b_save_Click(object sender, EventArgs e)
         {
-            //zapisuje status do xml
-
+            //uruchamia metode zapisu do xml
             XML_export(cards);
             MessageBox.Show("Zapisano listę plików");
         }
