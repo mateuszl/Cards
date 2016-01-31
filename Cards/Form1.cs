@@ -229,32 +229,35 @@ namespace Cards
 
         private void b_add_Click(object sender, EventArgs e)
         {
-            //dodaje obiekt nowej karty do listy gotowych kart 
-            if (pic_back.ImageLocation == null)
+            //dodaje obiekt nowej karty do listy kart do druku
+            if (list_box.SelectedIndex != -1)
             {
-                pic_back.ImageLocation = defaultReversePath;
-                pic_back.SizeMode = PictureBoxSizeMode.StretchImage;
-            }
-
-            try
-            {
-                Card c;
-                c = new Card();
-                c.frontPath = list_box.SelectedItem.ToString();
-                c.reversePath = pic_back.ImageLocation;
-                c.name = list_box.SelectedItem.ToString().Substring(c.frontPath.LastIndexOf("\\") + 1);
-                c.quantity = ud_quantity.Value;
-                c.width = float.Parse(tb_width.Text, System.Globalization.CultureInfo.InvariantCulture);
-                c.height = float.Parse(tb_height.Text, System.Globalization.CultureInfo.InvariantCulture);
-                for (int i = 1; i <= c.quantity; i++)
+                if (pic_back.ImageLocation == null)
                 {
-                    cards.Add(c);
-                    list_box_c.Items.Add(c); //wyswietlenie tworzonych obiektow na drugiej liscie
+                    pic_back.ImageLocation = defaultReversePath;
+                    pic_back.SizeMode = PictureBoxSizeMode.StretchImage;
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Nie udało się dodać karty");
+
+                try
+                {
+                    Card c;
+                    c = new Card();
+                    c.frontPath = list_box.SelectedItem.ToString();
+                    c.reversePath = pic_back.ImageLocation;
+                    c.name = list_box.SelectedItem.ToString().Substring(c.frontPath.LastIndexOf("\\") + 1);
+                    c.quantity = ud_quantity.Value;
+                    c.width = float.Parse(tb_width.Text, System.Globalization.CultureInfo.InvariantCulture);
+                    c.height = float.Parse(tb_height.Text, System.Globalization.CultureInfo.InvariantCulture);
+                    for (int i = 1; i <= c.quantity; i++)
+                    {
+                        cards.Add(c);
+                        list_box_c.Items.Add(c); //wyswietlenie tworzonych obiektow na drugiej liscie
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Nie udało się dodać karty");
+                }
             }
         }
 
@@ -314,7 +317,15 @@ namespace Cards
         {
             base.OnFormClosing(e);
             if (e.CloseReason == CloseReason.WindowsShutDown) return;
-            switch (MessageBox.Show(this, "Czy na pewno chcesz zamknąć program?", "Closing", MessageBoxButtons.YesNo))
+            switch (MessageBox.Show(this, "Czy chcesz zapisać przygotowany schemat wydruku?", "Zapisać?", MessageBoxButtons.YesNo))
+            {
+                case DialogResult.Yes:
+                    b_save_Click(b_save, EventArgs.Empty);
+                    break;
+                default:
+                    break;
+            }
+            switch (MessageBox.Show(this, "Czy na pewno chcesz zamknąć program?", "Zamykanie...", MessageBoxButtons.YesNo))
             {
                 case DialogResult.No:
                     e.Cancel = true;
@@ -327,13 +338,20 @@ namespace Cards
         private bool XML_export(List<Card> c)
         {
             //zapisuje status do xml
-
-            saveFileDialog2.ShowDialog();
-            FileStream fs = new FileStream(saveFileDialog2.FileName, FileMode.OpenOrCreate);
-            System.Xml.Serialization.XmlSerializer s = new System.Xml.Serialization.XmlSerializer(typeof(List<Card>));
-            s.Serialize(fs, c);
-            fs.Dispose();
-            return true;
+            try
+            {
+                saveFileDialog2.ShowDialog();
+                FileStream fs = new FileStream(saveFileDialog2.FileName, FileMode.OpenOrCreate);
+                System.Xml.Serialization.XmlSerializer s = new System.Xml.Serialization.XmlSerializer(typeof(List<Card>));
+                s.Serialize(fs, c);
+                fs.Dispose();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Nie zapisano");
+                return false;
+            }
         }
 
         private void b_load_Click(object sender, EventArgs e)
