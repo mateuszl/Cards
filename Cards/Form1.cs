@@ -30,7 +30,6 @@ namespace Cards
         public override string ToString()
         {
             return name;
-            //return name.Substring(name.LastIndexOf("\\") + 1) + "   x " + quantity + " szt.";
         }
     }
 
@@ -366,10 +365,18 @@ namespace Cards
             dialog.InitialDirectory = defaultPath;
             dialog.Title = "Wybierz plik xml do wczytania";
             DialogResult result = dialog.ShowDialog();
+            try
+            {
 
-            FileStream fs = new FileStream(dialog.FileName, FileMode.Open);
-            System.Xml.Serialization.XmlSerializer s = new System.Xml.Serialization.XmlSerializer(typeof(List<Card>));
-            cards = (List<Card>)s.Deserialize(fs);
+
+                FileStream fs = new FileStream(dialog.FileName, FileMode.Open);
+                System.Xml.Serialization.XmlSerializer s = new System.Xml.Serialization.XmlSerializer(typeof(List<Card>));
+                cards = (List<Card>)s.Deserialize(fs);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Błąd wczytywania pliku");
+            }
 
             for (int i = 0; i < cards.Count; i++)
             {
