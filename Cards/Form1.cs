@@ -13,8 +13,6 @@ namespace Cards
  *
  * pierwotne .img wskazujace na wybor frontu i reversa?
  * 
- * progressbar?
- * 
  */
 {
     [Serializable]
@@ -58,8 +56,14 @@ namespace Cards
             cards = new List<Card>();
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            b_katalog.Focus();
+        }
+
         private void list_box_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             try
             {
                 pic_front.ImageLocation = list_box.SelectedItem.ToString();
@@ -294,8 +298,6 @@ namespace Cards
         private void b_customBack_Click(object sender, EventArgs e)
         {
             //dodac jakieś wyrzucenie tego co juz jest ustawione jako obrazek
-            
-
             try
             {
                 OpenFileDialog dialog = new OpenFileDialog();
@@ -344,6 +346,7 @@ namespace Cards
                 System.Xml.Serialization.XmlSerializer s = new System.Xml.Serialization.XmlSerializer(typeof(List<Card>));
                 s.Serialize(fs, c);
                 fs.Dispose();
+                MessageBox.Show("Zapisano listę plików");
                 return true;
             }
             catch (Exception ex)
@@ -356,7 +359,6 @@ namespace Cards
         private void b_load_Click(object sender, EventArgs e)
         {
             //wczytuje zapisany status z xml
-
             cards.Clear();
             list_box_c.Items.Clear();
 
@@ -367,8 +369,6 @@ namespace Cards
             DialogResult result = dialog.ShowDialog();
             try
             {
-
-
                 FileStream fs = new FileStream(dialog.FileName, FileMode.Open);
                 System.Xml.Serialization.XmlSerializer s = new System.Xml.Serialization.XmlSerializer(typeof(List<Card>));
                 cards = (List<Card>)s.Deserialize(fs);
@@ -389,7 +389,51 @@ namespace Cards
         {
             //uruchamia metode zapisu do xml
             XML_export(cards);
-            MessageBox.Show("Zapisano listę plików");
         }
+
+        private void list_box_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && list_box.SelectedIndex != -1)
+            {
+                    b_add_Click(b_add, EventArgs.Empty);
+            }
+            if ((e.KeyCode == Keys.D1 | e.KeyCode == Keys.NumPad1) && list_box.SelectedIndex != -1)
+            {
+                ud_quantity.Value = 1;
+            }
+            if ((e.KeyCode == Keys.D2 | e.KeyCode == Keys.NumPad2) && list_box.SelectedIndex != -1)
+            {
+                ud_quantity.Value = 2;
+            }
+            if ((e.KeyCode == Keys.D3 | e.KeyCode == Keys.NumPad3) && list_box.SelectedIndex != -1)
+            {
+                ud_quantity.Value = 3;
+            } 
+            if ((e.KeyCode == Keys.D4 | e.KeyCode == Keys.NumPad4) && list_box.SelectedIndex != -1)
+            {
+                ud_quantity.Value = 4;
+            }
+            if ((e.KeyCode == Keys.D5 | e.KeyCode == Keys.NumPad5) && list_box.SelectedIndex != -1)
+            {
+                ud_quantity.Value = 5;
+            }
+            if ((e.KeyCode == Keys.D6 | e.KeyCode == Keys.NumPad6) && list_box.SelectedIndex != -1)
+            {
+                ud_quantity.Value = 6;
+            }
+            if ((e.KeyCode == Keys.D7 | e.KeyCode == Keys.NumPad7) && list_box.SelectedIndex != -1)
+            {
+                ud_quantity.Value = 7;
+            }
+            if ((e.KeyCode == Keys.D8 | e.KeyCode == Keys.NumPad8) && list_box.SelectedIndex != -1)
+            {
+                ud_quantity.Value = 8;
+            }
+            if ((e.KeyCode == Keys.D9 | e.KeyCode == Keys.NumPad9) && list_box.SelectedIndex != -1)
+            {
+                ud_quantity.Value = 9;
+            }
+        }
+
     }
 }

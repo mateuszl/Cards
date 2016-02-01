@@ -64,20 +64,18 @@
             // list_box
             // 
             this.list_box.FormattingEnabled = true;
-            this.list_box.ItemHeight = 20;
-            this.list_box.Location = new System.Drawing.Point(30, 106);
-            this.list_box.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.list_box.Location = new System.Drawing.Point(20, 69);
             this.list_box.Name = "list_box";
-            this.list_box.Size = new System.Drawing.Size(319, 564);
+            this.list_box.Size = new System.Drawing.Size(214, 368);
             this.list_box.TabIndex = 0;
             this.list_box.SelectedIndexChanged += new System.EventHandler(this.list_box_SelectedIndexChanged);
+            this.list_box.KeyDown += new System.Windows.Forms.KeyEventHandler(this.list_box_KeyDown);
             // 
             // b_katalog
             // 
-            this.b_katalog.Location = new System.Drawing.Point(30, 25);
-            this.b_katalog.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.b_katalog.Location = new System.Drawing.Point(20, 16);
             this.b_katalog.Name = "b_katalog";
-            this.b_katalog.Size = new System.Drawing.Size(170, 68);
+            this.b_katalog.Size = new System.Drawing.Size(113, 44);
             this.b_katalog.TabIndex = 1;
             this.b_katalog.Text = "Wybierz katalog";
             this.b_katalog.UseVisualStyleBackColor = true;
@@ -85,10 +83,9 @@
             // 
             // b_generate
             // 
-            this.b_generate.Location = new System.Drawing.Point(1380, 592);
-            this.b_generate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.b_generate.Location = new System.Drawing.Point(920, 385);
             this.b_generate.Name = "b_generate";
-            this.b_generate.Size = new System.Drawing.Size(174, 80);
+            this.b_generate.Size = new System.Drawing.Size(116, 52);
             this.b_generate.TabIndex = 2;
             this.b_generate.Text = "Generuj pdf";
             this.b_generate.UseVisualStyleBackColor = true;
@@ -96,10 +93,9 @@
             // 
             // b_load
             // 
-            this.b_load.Location = new System.Drawing.Point(1226, 592);
-            this.b_load.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.b_load.Location = new System.Drawing.Point(817, 385);
             this.b_load.Name = "b_load";
-            this.b_load.Size = new System.Drawing.Size(146, 35);
+            this.b_load.Size = new System.Drawing.Size(97, 23);
             this.b_load.TabIndex = 3;
             this.b_load.Text = "Wczytaj układ";
             this.b_load.UseVisualStyleBackColor = true;
@@ -107,10 +103,9 @@
             // 
             // b_save
             // 
-            this.b_save.Location = new System.Drawing.Point(1226, 637);
-            this.b_save.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.b_save.Location = new System.Drawing.Point(817, 414);
             this.b_save.Name = "b_save";
-            this.b_save.Size = new System.Drawing.Size(146, 35);
+            this.b_save.Size = new System.Drawing.Size(97, 23);
             this.b_save.TabIndex = 4;
             this.b_save.Text = "Zapisz układ";
             this.b_save.UseVisualStyleBackColor = true;
@@ -119,75 +114,67 @@
             // l_width
             // 
             this.l_width.AutoSize = true;
-            this.l_width.Location = new System.Drawing.Point(386, 38);
-            this.l_width.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.l_width.Location = new System.Drawing.Point(257, 25);
             this.l_width.Name = "l_width";
-            this.l_width.Size = new System.Drawing.Size(84, 20);
+            this.l_width.Size = new System.Drawing.Size(57, 13);
             this.l_width.TabIndex = 5;
             this.l_width.Text = "Szerokość";
             // 
             // l_height
             // 
             this.l_height.AutoSize = true;
-            this.l_height.Location = new System.Drawing.Point(386, 77);
-            this.l_height.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.l_height.Location = new System.Drawing.Point(257, 50);
             this.l_height.Name = "l_height";
-            this.l_height.Size = new System.Drawing.Size(81, 20);
+            this.l_height.Size = new System.Drawing.Size(57, 13);
             this.l_height.TabIndex = 6;
             this.l_height.Text = "Wysokość";
             // 
             // l_space
             // 
             this.l_space.AutoSize = true;
-            this.l_space.Location = new System.Drawing.Point(608, 36);
-            this.l_space.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.l_space.Location = new System.Drawing.Point(405, 23);
             this.l_space.Name = "l_space";
-            this.l_space.Size = new System.Drawing.Size(61, 20);
+            this.l_space.Size = new System.Drawing.Size(41, 13);
             this.l_space.TabIndex = 7;
             this.l_space.Text = "Odstęp";
             // 
             // tb_width
             // 
-            this.tb_width.Location = new System.Drawing.Point(476, 34);
-            this.tb_width.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tb_width.Location = new System.Drawing.Point(317, 22);
             this.tb_width.Name = "tb_width";
-            this.tb_width.Size = new System.Drawing.Size(74, 26);
+            this.tb_width.Size = new System.Drawing.Size(51, 20);
             this.tb_width.TabIndex = 9;
             this.tb_width.Text = "63";
             // 
             // tb_height
             // 
-            this.tb_height.Location = new System.Drawing.Point(476, 68);
-            this.tb_height.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tb_height.Location = new System.Drawing.Point(317, 44);
             this.tb_height.Name = "tb_height";
-            this.tb_height.Size = new System.Drawing.Size(74, 26);
+            this.tb_height.Size = new System.Drawing.Size(51, 20);
             this.tb_height.TabIndex = 10;
             this.tb_height.Text = "89";
             // 
             // pic_front
             // 
             this.pic_front.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pic_front.Location = new System.Drawing.Point(386, 108);
-            this.pic_front.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pic_front.Location = new System.Drawing.Point(257, 70);
             this.pic_front.Name = "pic_front";
-            this.pic_front.Size = new System.Drawing.Size(377, 547);
+            this.pic_front.Size = new System.Drawing.Size(252, 356);
             this.pic_front.TabIndex = 12;
             this.pic_front.TabStop = false;
             // 
             // pic_back
             // 
             this.pic_back.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pic_back.Location = new System.Drawing.Point(812, 106);
-            this.pic_back.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pic_back.Location = new System.Drawing.Point(541, 69);
             this.pic_back.Name = "pic_back";
-            this.pic_back.Size = new System.Drawing.Size(377, 547);
+            this.pic_back.Size = new System.Drawing.Size(252, 356);
             this.pic_back.TabIndex = 13;
             this.pic_back.TabStop = false;
             // 
             // ud_quantity
             // 
-            this.ud_quantity.Location = new System.Drawing.Point(674, 68);
-            this.ud_quantity.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ud_quantity.Location = new System.Drawing.Point(449, 44);
             this.ud_quantity.Maximum = new decimal(new int[] {
             30,
             0,
@@ -199,7 +186,7 @@
             0,
             0});
             this.ud_quantity.Name = "ud_quantity";
-            this.ud_quantity.Size = new System.Drawing.Size(90, 26);
+            this.ud_quantity.Size = new System.Drawing.Size(60, 20);
             this.ud_quantity.TabIndex = 15;
             this.ud_quantity.Value = new decimal(new int[] {
             1,
@@ -210,29 +197,26 @@
             // l_quantity
             // 
             this.l_quantity.AutoSize = true;
-            this.l_quantity.Location = new System.Drawing.Point(621, 80);
-            this.l_quantity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.l_quantity.Location = new System.Drawing.Point(414, 52);
             this.l_quantity.Name = "l_quantity";
-            this.l_quantity.Size = new System.Drawing.Size(42, 20);
+            this.l_quantity.Size = new System.Drawing.Size(29, 13);
             this.l_quantity.TabIndex = 16;
             this.l_quantity.Text = "Ilość";
             // 
             // l_revers
             // 
             this.l_revers.AutoSize = true;
-            this.l_revers.Location = new System.Drawing.Point(812, 33);
-            this.l_revers.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.l_revers.Location = new System.Drawing.Point(541, 21);
             this.l_revers.Name = "l_revers";
-            this.l_revers.Size = new System.Drawing.Size(67, 20);
+            this.l_revers.Size = new System.Drawing.Size(46, 13);
             this.l_revers.TabIndex = 17;
             this.l_revers.Text = "Rewers:";
             // 
             // b_default
             // 
-            this.b_default.Location = new System.Drawing.Point(885, 23);
-            this.b_default.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.b_default.Location = new System.Drawing.Point(590, 15);
             this.b_default.Name = "b_default";
-            this.b_default.Size = new System.Drawing.Size(142, 55);
+            this.b_default.Size = new System.Drawing.Size(95, 36);
             this.b_default.TabIndex = 18;
             this.b_default.Text = "Domyślny";
             this.b_default.UseVisualStyleBackColor = true;
@@ -240,10 +224,9 @@
             // 
             // b_customBack
             // 
-            this.b_customBack.Location = new System.Drawing.Point(1036, 25);
-            this.b_customBack.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.b_customBack.Location = new System.Drawing.Point(691, 16);
             this.b_customBack.Name = "b_customBack";
-            this.b_customBack.Size = new System.Drawing.Size(153, 54);
+            this.b_customBack.Size = new System.Drawing.Size(102, 35);
             this.b_customBack.TabIndex = 19;
             this.b_customBack.Text = "Wybierz inny";
             this.b_customBack.UseVisualStyleBackColor = true;
@@ -251,10 +234,9 @@
             // 
             // b_add
             // 
-            this.b_add.Location = new System.Drawing.Point(1230, 20);
-            this.b_add.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.b_add.Location = new System.Drawing.Point(820, 13);
             this.b_add.Name = "b_add";
-            this.b_add.Size = new System.Drawing.Size(171, 58);
+            this.b_add.Size = new System.Drawing.Size(114, 38);
             this.b_add.TabIndex = 20;
             this.b_add.Text = "Dodaj pozycję";
             this.b_add.UseVisualStyleBackColor = true;
@@ -263,19 +245,16 @@
             // list_box_c
             // 
             this.list_box_c.FormattingEnabled = true;
-            this.list_box_c.ItemHeight = 20;
-            this.list_box_c.Location = new System.Drawing.Point(1226, 108);
-            this.list_box_c.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.list_box_c.Location = new System.Drawing.Point(817, 70);
             this.list_box_c.Name = "list_box_c";
-            this.list_box_c.Size = new System.Drawing.Size(326, 464);
+            this.list_box_c.Size = new System.Drawing.Size(219, 303);
             this.list_box_c.TabIndex = 21;
             // 
             // b_delete
             // 
-            this.b_delete.Location = new System.Drawing.Point(1410, 18);
-            this.b_delete.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.b_delete.Location = new System.Drawing.Point(940, 12);
             this.b_delete.Name = "b_delete";
-            this.b_delete.Size = new System.Drawing.Size(144, 60);
+            this.b_delete.Size = new System.Drawing.Size(96, 39);
             this.b_delete.TabIndex = 22;
             this.b_delete.Text = "Usuń pozycję";
             this.b_delete.UseVisualStyleBackColor = true;
@@ -284,33 +263,32 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(231, 86);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(154, 56);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(121, 20);
+            this.label1.Size = new System.Drawing.Size(83, 13);
             this.label1.TabIndex = 23;
             this.label1.Text = "Znalezione pliki:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1231, 88);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(821, 57);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(182, 20);
+            this.label2.Size = new System.Drawing.Size(126, 13);
             this.label2.TabIndex = 24;
             this.label2.Text = "Pliki dodane do wydruku:";
             // 
             // ud_spaces
             // 
-            this.ud_spaces.Location = new System.Drawing.Point(676, 35);
+            this.ud_spaces.Location = new System.Drawing.Point(451, 23);
+            this.ud_spaces.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ud_spaces.Maximum = new decimal(new int[] {
             5,
             0,
             0,
             0});
             this.ud_spaces.Name = "ud_spaces";
-            this.ud_spaces.Size = new System.Drawing.Size(87, 26);
+            this.ud_spaces.Size = new System.Drawing.Size(58, 20);
             this.ud_spaces.TabIndex = 25;
             this.toolTip1.SetToolTip(this.ud_spaces, "Przerwy między kartami na wydruku w mm (0-5)");
             // 
@@ -328,10 +306,10 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1588, 694);
+            this.ClientSize = new System.Drawing.Size(1063, 462);
             this.Controls.Add(this.ud_spaces);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -355,11 +333,11 @@
             this.Controls.Add(this.b_generate);
             this.Controls.Add(this.b_katalog);
             this.Controls.Add(this.list_box);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MinimumSize = new System.Drawing.Size(1610, 750);
+            this.MinimumSize = new System.Drawing.Size(1079, 501);
             this.Name = "Form1";
-            this.Padding = new System.Windows.Forms.Padding(5);
+            this.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
             this.Text = "Generator wydruku kart";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pic_front)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_back)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ud_quantity)).EndInit();
