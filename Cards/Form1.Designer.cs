@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.list_box = new System.Windows.Forms.ListBox();
-            this.b_katalog = new System.Windows.Forms.Button();
+            this.b_catalog = new System.Windows.Forms.Button();
             this.b_generate = new System.Windows.Forms.Button();
             this.b_load = new System.Windows.Forms.Button();
             this.b_save = new System.Windows.Forms.Button();
@@ -71,15 +71,15 @@
             this.list_box.SelectedIndexChanged += new System.EventHandler(this.list_box_SelectedIndexChanged);
             this.list_box.KeyDown += new System.Windows.Forms.KeyEventHandler(this.list_box_KeyDown);
             // 
-            // b_katalog
+            // b_catalog
             // 
-            this.b_katalog.Location = new System.Drawing.Point(20, 16);
-            this.b_katalog.Name = "b_katalog";
-            this.b_katalog.Size = new System.Drawing.Size(113, 44);
-            this.b_katalog.TabIndex = 1;
-            this.b_katalog.Text = "Wybierz katalog";
-            this.b_katalog.UseVisualStyleBackColor = true;
-            this.b_katalog.Click += new System.EventHandler(this.b_katalog_Click);
+            this.b_catalog.Location = new System.Drawing.Point(20, 16);
+            this.b_catalog.Name = "b_catalog";
+            this.b_catalog.Size = new System.Drawing.Size(113, 44);
+            this.b_catalog.TabIndex = 1;
+            this.b_catalog.Text = "Wybierz katalog";
+            this.b_catalog.UseVisualStyleBackColor = true;
+            this.b_catalog.Click += new System.EventHandler(this.b_catalog_Click);
             // 
             // b_generate
             // 
@@ -281,7 +281,7 @@
             // ud_spaces
             // 
             this.ud_spaces.Location = new System.Drawing.Point(451, 23);
-            this.ud_spaces.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ud_spaces.Margin = new System.Windows.Forms.Padding(2);
             this.ud_spaces.Maximum = new decimal(new int[] {
             5,
             0,
@@ -296,7 +296,7 @@
             // 
             this.saveFileDialog1.DefaultExt = "\".pdf\"";
             this.saveFileDialog1.Filter = "PDF files|*.pdf|All files|*.*";
-            this.saveFileDialog1.InitialDirectory = "\"D/temp\"";
+            this.saveFileDialog1.InitialDirectory = "\"C/temp\"";
             // 
             // saveFileDialog2
             // 
@@ -331,11 +331,11 @@
             this.Controls.Add(this.b_save);
             this.Controls.Add(this.b_load);
             this.Controls.Add(this.b_generate);
-            this.Controls.Add(this.b_katalog);
+            this.Controls.Add(this.b_catalog);
             this.Controls.Add(this.list_box);
             this.MinimumSize = new System.Drawing.Size(1079, 501);
             this.Name = "Form1";
-            this.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "Generator wydruku kart";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pic_front)).EndInit();
@@ -350,7 +350,7 @@
         #endregion
 
         private System.Windows.Forms.ListBox list_box;
-        private System.Windows.Forms.Button b_katalog;
+        private System.Windows.Forms.Button b_catalog;
         private System.Windows.Forms.Button b_generate;
         private System.Windows.Forms.Button b_load;
         private System.Windows.Forms.Button b_save;

@@ -39,16 +39,10 @@ namespace Cards
         [XmlArray("CardList"), XmlArrayItem(typeof(Card), ElementName = "Card")]
         public List<Card> cards { get; set; }
 
-        //komp w pracy
-        //string frontsDefaultPath = @"C:\temp\fronts";
-        //string reversesPath = @"C:\temp\back";
-        //string defaultReversePath = @"C:\temp\back\back_default.png";
-
-        // komp w domu
-        string frontsDefaultPath = @"D:\temp\fronts";
-        string reversesPath = @"D:\temp\back";
-        string defaultReversePath = @"D:\temp\back\back_default.png";
-        string defaultPath = @"D:\temp";
+        string frontsDefaultPath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\fronts").ToString();
+        string reversesPath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\back").ToString();
+        string defaultReversePath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\back\back_default.png").ToString();
+        string defaultPath = @"C:\temp";
 
         public Form1()
         {
@@ -58,7 +52,7 @@ namespace Cards
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            b_katalog.Focus();
+            b_catalog.Focus();
         }
 
         private void list_box_SelectedIndexChanged(object sender, EventArgs e)
@@ -75,7 +69,7 @@ namespace Cards
             }
         }
 
-        private void b_katalog_Click(object sender, EventArgs e)
+        private void b_catalog_Click(object sender, EventArgs e)
         {
             list_box.Items.Clear();
             try
@@ -351,7 +345,7 @@ namespace Cards
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Nie zapisano");
+                MessageBox.Show("Nie zapisano!");
                 return false;
             }
         }
@@ -372,6 +366,7 @@ namespace Cards
                 FileStream fs = new FileStream(dialog.FileName, FileMode.Open);
                 System.Xml.Serialization.XmlSerializer s = new System.Xml.Serialization.XmlSerializer(typeof(List<Card>));
                 cards = (List<Card>)s.Deserialize(fs);
+                MessageBox.Show("Wczytano listę plików");
             }
             catch (Exception ex)
             {
@@ -382,7 +377,6 @@ namespace Cards
             {
                 list_box_c.Items.Add(cards[i]);
             }
-            MessageBox.Show("Wczytano listę plików");
         }
 
         private void b_save_Click(object sender, EventArgs e)
