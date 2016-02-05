@@ -53,6 +53,10 @@ namespace Cards
         private void Form1_Load(object sender, EventArgs e)
         {
             b_catalog.Focus();
+            pic_front.ImageLocation = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\defaultFront.jpg").ToString();
+            pic_front.SizeMode = PictureBoxSizeMode.Zoom;
+            pic_back.ImageLocation = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\defaultBack.jpg").ToString();
+            pic_back.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
         private void list_box_SelectedIndexChanged(object sender, EventArgs e)
@@ -216,12 +220,12 @@ namespace Cards
                     }
                 }
                 doc.Close();
+                MessageBox.Show("Plik pdf został utworzony!");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Utworzenie pliku nie powiodło się.");
             }
-            MessageBox.Show("Plik pdf został utworzony!");
         }
 
         private void b_add_Click(object sender, EventArgs e)
@@ -332,7 +336,7 @@ namespace Cards
 
         private bool XML_export(List<Card> c)
         {
-            //zapisuje status do xml
+            //zapisuje status parsując do xml
             try
             {
                 saveFileDialog2.ShowDialog();
@@ -352,7 +356,7 @@ namespace Cards
 
         private void b_load_Click(object sender, EventArgs e)
         {
-            //wczytuje zapisany status z xml
+            //wczytuje zapisany status deparsując z xml
             cards.Clear();
             list_box_c.Items.Clear();
 
