@@ -43,6 +43,8 @@ namespace Cards
         string reversesPath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\back").ToString();
         string defaultReversePath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\back\back_default.png").ToString();
         string defaultPath = @"C:\temp";
+        string startFrontPath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\startFront.jpg").ToString();
+        string startReversePath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\startBack.jpg").ToString();
 
         public Form1()
         {
@@ -53,9 +55,9 @@ namespace Cards
         private void Form1_Load(object sender, EventArgs e)
         {
             b_catalog.Focus();
-            pic_front.ImageLocation = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\defaultFront.jpg").ToString();
+            pic_front.ImageLocation = startFrontPath;
             pic_front.SizeMode = PictureBoxSizeMode.Zoom;
-            pic_back.ImageLocation = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\defaultBack.jpg").ToString();
+            pic_back.ImageLocation = startReversePath;
             pic_back.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
@@ -233,7 +235,7 @@ namespace Cards
             //dodaje obiekt nowej karty do listy kart do druku
             if (list_box.SelectedIndex != -1)
             {
-                if (pic_back.ImageLocation == null)
+                if (pic_back.ImageLocation == null | pic_back.ImageLocation == startReversePath)
                 {
                     pic_back.ImageLocation = defaultReversePath;
                     pic_back.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -260,6 +262,10 @@ namespace Cards
                     MessageBox.Show("Nie udało się dodać karty");
                 }
             }
+            else
+            {
+                MessageBox.Show("Nie zaznaczono karty do dodania!");
+            }
         }
 
         private void b_delete_Click(object sender, EventArgs e)
@@ -267,7 +273,6 @@ namespace Cards
             if (list_box_c.SelectedIndex != -1)
             {
                 object item = list_box_c.SelectedItem;
-                //cards.RemoveAll(s => s.ToString() == item.ToString());
                 cards.Remove((Card)item);
                 list_box_c.Items.Remove(item);
             }
