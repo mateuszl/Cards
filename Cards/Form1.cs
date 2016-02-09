@@ -7,13 +7,12 @@ using System.IO;
 using System.Drawing;
 
 namespace Cards
-/* TODO:
- * 
- * wyjecie metod na zewnatrz?
- *
- * pierwotne .img wskazujace na wybor frontu i reversa?
- * 
- */
+    /*
+     *      Program wykonany przez Mateusza Łukaszenko - nr indeksu 96249
+     *      
+     *      Informatyka TWO - II stopień - I semestr
+     * 
+     */
 {
     [Serializable]
     public struct Card
@@ -39,12 +38,12 @@ namespace Cards
         [XmlArray("CardList"), XmlArrayItem(typeof(Card), ElementName = "Card")]
         public List<Card> cards { get; set; }
 
-        string frontsDefaultPath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\fronts").ToString();
-        string reversesPath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\back").ToString();
-        string defaultReversePath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\back\back_default.png").ToString();
-        string defaultPath = @"C:\temp";
-        string startFrontPath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\startFront.jpg").ToString();
-        string startReversePath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\startBack.jpg").ToString();
+        string frontsDefaultPath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\fronts").ToString(); //domyślna ścieżka do frontów
+        string reversesPath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\back").ToString();//domyślna ścieżka do rewersów
+        string defaultReversePath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\back\back_default.png").ToString(); //domyślna ścieżka do domyślnego rewersu
+        string defaultPath = @"C:\TEMP"; //domyślna ścieżka do zapisu
+        string startFrontPath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\startFront.jpg").ToString(); //ścieżka do obrazka startowego frontu
+        string startReversePath = Path.GetFullPath(Application.StartupPath.ToString() + @"..\..\..\..\resources\startBack.jpg").ToString();  //ścieżka do obrazka startowego rewersu
 
         public Form1()
         {
@@ -63,7 +62,6 @@ namespace Cards
 
         private void list_box_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             try
             {
                 pic_front.ImageLocation = list_box.SelectedItem.ToString();
@@ -71,7 +69,7 @@ namespace Cards
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Coś się nie udało");
+                MessageBox.Show("Coś się nie udało. Plik nie prawidłowy.");
             }
         }
 
@@ -100,24 +98,21 @@ namespace Cards
             }
         }
 
-        private void b_generate_Click(object sender, EventArgs e)
+        private void b_generate_Click(object sender, EventArgs e)  //generuje pdf
         {
-            //generuje pdf
             float cardHeight = 0;
             float cardWidth = 0;
             float space = mm2point(float.Parse(ud_spaces.Text));
 
             try
             {
-                for (int i = 0; i < cards.Count; i++)
+                for (int i = 0; i < cards.Count; i++) //dodanie wartości do pól obiektów
                 {
-
                     cardHeight = mm2point((float.Parse(tb_height.Text)));
                     cardWidth = mm2point((float.Parse(tb_width.Text)));
                     Card k = cards[i];
                     k.height = cardHeight;
                     k.width = cardWidth;
-
                     cards[i] = k;
                 }
             }
@@ -126,11 +121,11 @@ namespace Cards
                 MessageBox.Show("Złe wymiary karty!");
             }
 
+            saveFileDialog1.InitialDirectory = defaultPath;
             saveFileDialog1.ShowDialog();
+            iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4, 10, 10, 30, 30); //ustawienia dokumentu
 
-            iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4, 10, 10, 30, 30);
-
-            try
+            try //proba otwarcia dokumentu i zapisu w nim danych
             {
                 iTextSharp.text.pdf.PdfWriter writer = iTextSharp.text.pdf.PdfWriter.GetInstance(doc, new System.IO.FileStream(saveFileDialog1.FileName, System.IO.FileMode.OpenOrCreate));
                 doc.Open();
@@ -146,10 +141,10 @@ namespace Cards
                 List<Card> temp = new List<Card>();
 
                 doc.NewPage();
-                for (int i = 0; i < cards.Count; i++)
+                for (int i = 0; i < cards.Count; i++) //dla każdej karty dodajemy do dokumentu jego front na pierwszej stronie
                 {
                     var img = iTextSharp.text.Image.GetInstance(cards[i].frontPath);
-                    img.SetAbsolutePosition(doc.LeftMargin + x * (cards[i].width + space), doc.BottomMargin + y * (cards[i].height + space)); //dodac spaces
+                    img.SetAbsolutePosition(doc.LeftMargin + x * (cards[i].width + space), doc.BottomMargin + y * (cards[i].height + space));
 
                     if (Image.FromFile(cards[i].frontPath).Height > Image.FromFile(cards[i].frontPath).Width)
                     {
@@ -165,18 +160,18 @@ namespace Cards
                     temp.Add(cards[i]);
                     x++;
 
-                    if (x >= cardsInX)
+                    if (x >= cardsInX && i != cards.Count - 1) //jesli fronty kart nie mieszcza sie na kartce w osi X
                     {
                         x = 0;
                         y++;
-                        if (y >= cardsInY)
+                        if (y >= cardsInY) //jesli fronty kart nie mieszcza sie na kartce w osi Y, czyli gdy strona zostanie przepelniona
                         {
                             y = 0;
                             doc.NewPage();
-                            for (int z = 0; z < temp.Count; z++)
+                            for (int z = 0; z < temp.Count; z++) //tworzona jest kolejna strona i dodawane sa na niej rewersy
                             {
                                 var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
-                                reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * (temp[z].width + space)), doc.BottomMargin + y * (temp[z].height + space)); //dodac spaces
+                                reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * (temp[z].width + space)), doc.BottomMargin + y * (temp[z].height + space));
                                 reverse.ScaleAbsolute(cardWidth, cardHeight);
                                 cb.AddImage(reverse);
                                 x++;
@@ -195,7 +190,7 @@ namespace Cards
                             temp.Clear();
                         }
                     }
-                    else if (i >= a && i == cards.Count - 1) //gdy aktualna strona jest niezapelniona i przeanalizowalismy ostatnia karte
+                    else if (i >= a && i == cards.Count - 1) //gdy aktualna strona jest niezapelniona i przeanalizowalismy ostatnia karte - tworzy dodatkowa strone z rewersami (bo wtedy w pierwszy if w ogole program nie wchodzi)
                     {
                         doc.NewPage();
                         y = 0;
@@ -203,7 +198,7 @@ namespace Cards
                         for (int z = 0; z < temp.Count; z++)
                         {
                             var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
-                            reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * (temp[z].width + space)), doc.BottomMargin + y * (temp[z].height + space)); //dodac spaces
+                            reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * (temp[z].width + space)), doc.BottomMargin + y * (temp[z].height + space));
                             reverse.ScaleAbsolute(cardWidth, cardHeight);
                             cb.AddImage(reverse);
                             x++;
@@ -230,9 +225,8 @@ namespace Cards
             }
         }
 
-        private void b_add_Click(object sender, EventArgs e)
+        private void b_add_Click(object sender, EventArgs e) //tworzy nowy obiekt karty z parametrami i dodaje go do listy kart do druku
         {
-            //dodaje obiekt nowej karty do listy kart do druku
             if (list_box.SelectedIndex != -1)
             {
                 if (pic_back.ImageLocation == null | pic_back.ImageLocation == startReversePath)
@@ -268,7 +262,7 @@ namespace Cards
             }
         }
 
-        private void b_delete_Click(object sender, EventArgs e)
+        private void b_delete_Click(object sender, EventArgs e) //usuniecie karty z listy do wydruku
         {
             if (list_box_c.SelectedIndex != -1)
             {
@@ -278,9 +272,10 @@ namespace Cards
             }
         }
 
-        private void b_default_Click(object sender, EventArgs e)
+        private void b_default_Click(object sender, EventArgs e) //ustawienie odmyslnego rewersa do karty
         {
-            //dodac jakieś wyrzucenie tego co juz jest ustawione jako obrazek
+            pic_back.ImageLocation = startReversePath;
+            pic_back.SizeMode = PictureBoxSizeMode.Zoom;
             try
             {
                 pic_back.ImageLocation = defaultReversePath;
@@ -298,9 +293,10 @@ namespace Cards
             return mm / .353F;
         }
 
-        private void b_customBack_Click(object sender, EventArgs e)
+        private void b_customBack_Click(object sender, EventArgs e) //opcja wyboru innego rewersu niz domyslny
         {
-            //dodac jakieś wyrzucenie tego co juz jest ustawione jako obrazek
+            pic_back.ImageLocation = startReversePath;
+            pic_back.SizeMode = PictureBoxSizeMode.Zoom;
             try
             {
                 OpenFileDialog dialog = new OpenFileDialog();
@@ -339,11 +335,11 @@ namespace Cards
             }
         }
 
-        private bool XML_export(List<Card> c)
+        private bool XML_export(List<Card> c)  //zapisuje status wydruku parsując listę obiektów do xml
         {
-            //zapisuje status parsując do xml
             try
             {
+                saveFileDialog2.InitialDirectory = defaultPath;
                 saveFileDialog2.ShowDialog();
                 FileStream fs = new FileStream(saveFileDialog2.FileName, FileMode.OpenOrCreate);
                 System.Xml.Serialization.XmlSerializer s = new System.Xml.Serialization.XmlSerializer(typeof(List<Card>));
@@ -359,9 +355,8 @@ namespace Cards
             }
         }
 
-        private void b_load_Click(object sender, EventArgs e)
+        private void b_load_Click(object sender, EventArgs e)              //wczytuje zapisany status deparsując z xml
         {
-            //wczytuje zapisany status deparsując z xml
             cards.Clear();
             list_box_c.Items.Clear();
 
@@ -388,13 +383,12 @@ namespace Cards
             }
         }
 
-        private void b_save_Click(object sender, EventArgs e)
+        private void b_save_Click(object sender, EventArgs e)         //uruchamia metode zapisu do xml
         {
-            //uruchamia metode zapisu do xml
             XML_export(cards);
         }
 
-        private void list_box_KeyDown(object sender, KeyEventArgs e)
+        private void list_box_KeyDown(object sender, KeyEventArgs e)   //obsluga przycisków do ustawiania ilości na liście kart
         {
             if (e.KeyCode == Keys.Enter && list_box.SelectedIndex != -1)
             {

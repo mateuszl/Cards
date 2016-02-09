@@ -312,7 +312,6 @@
             // 
             this.saveFileDialog2.DefaultExt = "\".xml\"";
             this.saveFileDialog2.Filter = "XML files|*.xml|All files|*.*";
-            this.saveFileDialog2.InitialDirectory = "\"D/temp\"";
             // 
             // Form1
             // 
