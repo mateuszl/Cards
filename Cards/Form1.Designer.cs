@@ -344,7 +344,7 @@
             this.MinimumSize = new System.Drawing.Size(1079, 501);
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Text = "Generator wydruku kart";
+            this.Text = "Generator kart do druku";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pic_front)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_back)).EndInit();

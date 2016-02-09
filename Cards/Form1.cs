@@ -172,7 +172,17 @@ namespace Cards
                             {
                                 var reverse = iTextSharp.text.Image.GetInstance(temp[z].reversePath);
                                 reverse.SetAbsolutePosition((mm2point(210) - doc.LeftMargin - temp[z].width - x * (temp[z].width + space)), doc.BottomMargin + y * (temp[z].height + space));
-                                reverse.ScaleAbsolute(cardWidth, cardHeight);
+
+                                if (Image.FromFile(cards[i].reversePath).Height > Image.FromFile(cards[i].reversePath).Width)
+                                {
+                                    reverse.ScaleAbsolute(cardWidth, cardHeight);
+                                }
+                                else
+                                {
+                                    reverse.RotationDegrees = 90;
+                                    reverse.ScaleAbsolute(cardHeight, cardWidth);
+                                }
+
                                 cb.AddImage(reverse);
                                 x++;
                                 if (x >= cardsInX)
@@ -232,7 +242,7 @@ namespace Cards
                 if (pic_back.ImageLocation == null | pic_back.ImageLocation == startReversePath)
                 {
                     pic_back.ImageLocation = defaultReversePath;
-                    pic_back.SizeMode = PictureBoxSizeMode.StretchImage;
+                    pic_back.SizeMode = PictureBoxSizeMode.Zoom;
                 }
 
                 try
@@ -279,7 +289,7 @@ namespace Cards
             try
             {
                 pic_back.ImageLocation = defaultReversePath;
-                pic_back.SizeMode = PictureBoxSizeMode.StretchImage;
+                pic_back.SizeMode = PictureBoxSizeMode.Zoom;
             }
             catch (Exception ex)
             {
@@ -305,7 +315,7 @@ namespace Cards
                 dialog.Title = "Wybierz rewers dla karty";
                 DialogResult result = dialog.ShowDialog();
                 pic_back.ImageLocation = dialog.FileName;
-                pic_back.SizeMode = PictureBoxSizeMode.StretchImage;
+                pic_back.SizeMode = PictureBoxSizeMode.Zoom;
             }
             catch (Exception ex)
             {
